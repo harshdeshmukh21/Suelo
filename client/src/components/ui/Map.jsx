@@ -72,7 +72,6 @@ const Map = () => {
       );
     });
 
-    // Clean up
     return () => map.remove();
   }, []);
 
