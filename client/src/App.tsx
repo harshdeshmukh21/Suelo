@@ -1,14 +1,14 @@
-import { Button } from './components/ui/button'
-import './App.css'
+import { Button } from "./components/ui/button";
+import "./App.css";
+import Component from "./components/ui/navbar";
 
 function App() {
-
-
   return (
-    <div className='bg-black h-screen'>
+    <div className="bg-black h-screen">
       <Button>Hello</Button>
+      <Component />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
