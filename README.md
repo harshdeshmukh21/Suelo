@@ -7,4 +7,4 @@ Features
 3. Plantation Activity Creation: For agricultural land, users can initiate plantation activities.
 4. Community Chat: Engage with other users to share progress and insights on plantation activities.
 5. Twitter-like Interface for Sharing: Share updates on plantation activities with a Twitter-like interface.
-6. [Suelo.AI]: Catering the basic FAQs about plantation and plantation tools via AI.
+6. Suelo.AI: Catering the basic FAQs about plantation and plantation tools via AI.
