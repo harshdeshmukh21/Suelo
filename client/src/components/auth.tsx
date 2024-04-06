@@ -1,8 +1,8 @@
-// import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
 import LoginButton from "./login";
 import logo from "../assets/logo.svg";
 
-const Auth = () => {
+const Auth: React.FC = () => {
   return (
     <>
       <div
@@ -16,11 +16,9 @@ const Auth = () => {
         <div className="text-7xl font-bold font-montserrat mb-auto mr-auto p-4 text-[#1F2114] ml-[270px] mt-[100px]">
           SUELO
         </div>
-
-        <div className="h-full w-2/5 bg-white  ">
+        <div className="h-full w-2/5 bg-white ">
           <div className="relative flex flex-col items-center justify-center h-full ">
             <img src={logo} alt="Logo" className="h-32 w-32 mr-2 mb-5" />
-
             <div className="flex flex-col justify-center items-center h-[425px] w-[450px] bg-black rounded-[20px] ">
               <div>
                 <div className="font-bold text-3xl text-white font-montserrat mt-4 ml-4 mb-10 ">
@@ -42,7 +40,6 @@ const Auth = () => {
                 placeholder="Password"
                 className="font-montserrat rounded bg-white text-black p-4 outline-none mb-1 h-[50px] w-[300px]"
               />
-
               <button className="font-montserrat bg-[#1F2114] text-white p-5 rounded mt-6 text-center h-[20px] flex flex-col justify-center">
                 Sign Up
               </button>
