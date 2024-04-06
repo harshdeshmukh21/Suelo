@@ -1,32 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import star from './star.png';
+import { useState, useEffect } from "react";
+import star from "./star.png";
 import {
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from '@/components/card';
+} from "@/components/card";
 
-import { Card } from '@/components/card';
 
+import { Card } from "@/components/card";
 import Sidebar from "./Side-bar";
+import Remainder from "./Remainder";
+import Leaderboardwidget from "./Leaderboard/Leaderboardwidget";
+
 
 export default function Dashboard() {
     const [highlightedUpdates, setHighlightedUpdates] = useState([
         {
-            title: 'HarshlovesTrees',
-            description: 'We have planted over 2000 trees today kudos to us',
+            title: "HarshlovesTrees",
+            description: "We have planted over 2000 trees today kudos to us",
         },
         {
-            title: 'Atharva-plants',
-            description: 'We have planted over 2000 trees today kudos to us',
+            title: "Atharva-plants",
+            description: "We have planted over 2000 trees today kudos to us",
         },
         {
-            title: 'HarhlovesTrees',
-            description: 'We have planted over 2000 trees today kudos to us',
+            title: "HarhlovesTrees",
+            description: "We have planted over 2000 trees today kudos to us",
         },
     ]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [showDialog, setShowDialog] = useState(true);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -38,10 +42,12 @@ export default function Dashboard() {
         return () => clearInterval(interval);
     }, [highlightedUpdates]);
 
+
+
     return (
         <div className="text-white flex ">
             <Sidebar />
-            <div className="right w-4/5 ml-10">
+            <div className="right w-full ml-8">
                 <div className="upper flex flex-row w-full">
                     <div className="flex flex-row justify-start w-full items-center p-4">
                         <h1 className="text-black text-xl ">Hello User</h1>
@@ -54,24 +60,34 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-
-                <div className="w-2/5 ">
-                    <Card className="bg-[#1F2114] h-[200px] p-4 text-white">
-                        <CardHeader>
-                            <CardTitle>High Lighted Updates</CardTitle>
-                        </CardHeader>
-                        <CardContent className="overflow-scroll bg-white text-black rounded-md p-0 h-[100px] ">
+                <div className="flex flex-row">
+                    <div className="w-2/4 ">
+                        <Card className="bg-[#1F2114] h-[200px] p-4 text-white">
                             <CardHeader>
-                                <CardTitle>
-                                    {highlightedUpdates[currentIndex].title}
-                                </CardTitle>
-                                <CardDescription>
-                                    {highlightedUpdates[currentIndex].description}
-                                </CardDescription>
+                                <CardTitle>High Lighted Updates</CardTitle>
                             </CardHeader>
-                        </CardContent>
-                    </Card>
+                            <CardContent className="overflow-scroll bg-white text-black rounded-md p-0 h-[100px] ">
+                                <CardHeader>
+                                    <CardTitle>{highlightedUpdates[currentIndex].title}</CardTitle>
+                                    <CardDescription>
+                                        {highlightedUpdates[currentIndex].description}
+                                    </CardDescription>
+                                </CardHeader>
+                            </CardContent>
+                        </Card>
+                    </div>
+                    <div className="w-full flex flex-row ">
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+                    </div>
                 </div>
+                <div className="flex flex-row"><Remainder />
+                    <Leaderboardwidget /></div>
+
+
+
             </div>
         </div>
     );
