@@ -6,14 +6,14 @@ import "./Map.css"; // Import CSS file for custom styling
 mapboxgl.accessToken =
   "pk.eyJ1IjoiaGFyc2hkZXNobXVraDIxIiwiYSI6ImNsdW1ydmF3MjBiNWMya3BueWxsbHc1OTYifQ.ZQ10ldWOzFyzBb_DMeiDXg";
 
-const Map = () => {
-  const mapContainerRef = useRef(null);
-  const geocoderRef = useRef(null);
-  const markerRef = useRef(null);
+const Map: React.FC = () => {
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const geocoderRef = useRef<any>(null); // Change the type to `any` for now, as there is no official TypeScript definition for MapboxGeocoder
+  const markerRef = useRef<mapboxgl.Marker | null>(null);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
+      container: mapContainerRef.current!,
       style: "mapbox://styles/mapbox/streets-v11",
       zoom: 9,
     });

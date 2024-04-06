@@ -1,10 +1,24 @@
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Landing from "./components/landing";
+import Auth from "./components/auth";
+import Dashboard from "./components/";
+import Map from "./components/Map";
+import Events from "./components/events";
 
+import "./App.css";
 
-
-const Routes = () => {
-    return (
-        <div>Routes</div>
-    )
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/dashboard/*" element={<Dashboard />}>
+        <Route path="/yieldatlas/*" element={<Map />}>
+        <Route path="/events/*" element={<Events/>}>         
+        </Routes>
+    </Router>
+  );
 }
 
-export default Routes
+export default App;
