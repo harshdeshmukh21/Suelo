@@ -1,12 +1,12 @@
-import { Button } from "./components/ui/button";
 import "./App.css";
-import Component from "./components/ui/navbar";
+import "./index.css";
+import Auth from "./components/auth.tsx";
+// import Navbar from "./components/navbar.tsx"; // Replace this with the correct path to your Navbar component
 
 function App() {
   return (
-    <div className="bg-black h-screen">
-      <Button>Hello</Button>
-      <Component />
+    <div>
+      <Auth />
     </div>
   );
 }

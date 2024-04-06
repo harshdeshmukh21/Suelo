@@ -1,12 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-import Navbar from "./components/ui/navbar.tsx";
+import { createRoot } from "react-dom/client";
+import { Auth0Provider } from "@auth0/auth0-react";
+import App from "./App";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+const rootElement = document.getElementById("root");
+
+// Using non-null assertion operator
+const root = createRoot(rootElement!);
+
+root.render(
+ <Auth0Provider
+    domain="harshdeshmukh21.us.auth0.com"
+    clientId="5jvESFtGYzACows13qC8YZCykK3A5E0s"
+    authorizationParams={{
+      redirect_uri: window.location.origin,
+    }}
+ >
     <App />
-    <Navbar />
-  </React.StrictMode>
+ </Auth0Provider>
 );
