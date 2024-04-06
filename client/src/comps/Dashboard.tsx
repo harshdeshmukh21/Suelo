@@ -85,9 +85,6 @@ export default function Dashboard() {
                 </div>
                 <div className="flex flex-row"><Remainder />
                     <Leaderboardwidget /></div>
-
-
-
             </div>
         </div>
     );
