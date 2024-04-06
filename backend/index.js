@@ -15,6 +15,9 @@ app.use(cors()); // Enable CORS for all routes
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 // Define a route to handle crop suggestions
+// Define a route to handle crop suggestions
+// Define a route to handle crop suggestions
+// Define a route to handle crop suggestions
 app.post('/suggest-crops', async (req, res) => {
     const { latitude, longitude, areaName } = req.body;
 
@@ -25,9 +28,14 @@ app.post('/suggest-crops', async (req, res) => {
         const prompt = `Given the location at latitude ${latitude}, longitude ${longitude}, and area name ${areaName}, suggest the ideal crop to plant.`;
 
         // Generate content based on the prompt
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        let text = await response.text();
+        const options = {
+            temperature: 0.7, // Example temperature, adjust as needed
+            maxTokens: 50, // Limiting the response to 100 tokens
+        };
+
+        const result = await model.generateContent(prompt, options);
+        const response = result.data;
+        let text = response.choices[0].text;
 
         // Remove newlines and asterisks from the text
         text = text.replace(/[\n*]/g, '');
@@ -38,6 +46,9 @@ app.post('/suggest-crops', async (req, res) => {
         res.status(500).json({ error: "An error occurred while generating crop suggestion." });
     }
 });
+
+
+
 
 app.listen(port, () => {
     console.log(`Backend server is running on port ${port}`);
