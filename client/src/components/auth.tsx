@@ -1,5 +1,5 @@
 import React from "react";
-import LoginButton from "./login";
+import LoginButton from "../components/login";
 import logo from "../assets/logo.svg";
 
 const Auth: React.FC = () => {
