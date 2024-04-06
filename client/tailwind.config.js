@@ -1,14 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class"],
+export default {
   content: [
+<<<<<<< Updated upstream
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+=======
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite/**/*.js"
+>>>>>>> Stashed changes
   ],
-  prefix: "",
   theme: {
+<<<<<<< Updated upstream
     container: {
       center: true,
       padding: "2rem",
@@ -38,3 +43,11 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+=======
+    extend: {},
+  },
+  plugins: [
+    require('flowbite/plugin')
+]
+}
+>>>>>>> Stashed changes
