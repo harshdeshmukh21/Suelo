@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import logo from "./image.png";
+import DialogDemo from "@/components/ui/profile";
 
 const Sidebar = () => {
   return (
@@ -30,6 +31,7 @@ const Sidebar = () => {
         >
           Map
         </Button>
+        <DialogDemo />
       </div>
     </div>
   );
