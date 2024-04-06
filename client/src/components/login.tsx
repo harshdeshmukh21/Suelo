@@ -1,15 +1,39 @@
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../Firebase";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 const LoginButton = () => {
   const navigate = useNavigate();
-  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, isLoading, user } = useAuth0();
+
+  if(user){
+    console.log(user);
+  }
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log(isAuthenticated);
-      navigate("/dashboard");
+      // Check if user exists in Firestore
+      const userRef = doc(db, "users", user?.sub ?? "");
+      getDoc(userRef)
+        .then((docSnapshot) => {
+          if (docSnapshot.exists()) {
+            // User exists, navigate to dashboard
+            navigate("/dashboard");
+          } else {
+            // User doesn't exist, create a new document in Firestore
+            setDoc(userRef, {
+              name: user?.name ?? "",
+              email: user?.email ?? "",
+              picture: user?.picture ?? "",
+              // Add any other user properties you need
+            })
+              .then(() => {
+                navigate("/dashboard");
+              });
+          }
+        });
     }
   }, [isAuthenticated]);
 

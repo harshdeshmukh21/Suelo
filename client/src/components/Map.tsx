@@ -114,7 +114,7 @@ const Map: React.FC = () => {
           <h2 className="pl-[50px] mt-12 font-bold">YIELD ATLAS.</h2>
           <div
             ref={mapContainerRef}
-            className=" w-[650px] h-[500px] ml-[5vw] mt-[5%] bg-[#171717] p-2"
+            className=" w-[650px] h-[500px] ml-[5vw] mt-[5%] "
           />
         </div>
       </div>

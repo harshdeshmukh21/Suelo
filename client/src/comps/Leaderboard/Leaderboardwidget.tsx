@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const ranks = [
   {
@@ -42,6 +43,7 @@ const ranks = [
 ];
 
 export default function TableDemo() {
+  const { user } = useAuth0();
   return (
     <Table className="text-white mt-8 rounded-lg m-8 h-[350px] w-[90%] bg-[#1F2114]">
       <TableHeader>
@@ -55,6 +57,12 @@ export default function TableDemo() {
       <TableBody>
         {ranks.map((rank, index) => (
           <TableRow key={index}>
+            <TableCell>
+              <img
+                src={user?.picture}
+                className="h-10 w-10 rounded-full"
+              />
+            </TableCell>
             <TableCell>{rank.Name}</TableCell>
             <TableCell>{rank.ramk}</TableCell>
             <TableCell className="text-right">{rank.Score}</TableCell>
@@ -64,7 +72,7 @@ export default function TableDemo() {
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={3}>Your Rank</TableCell>
+          <TableCell colSpan={4}>Your Rank</TableCell>
           <TableCell className="text-right">2,500</TableCell>
         </TableRow>
       </TableFooter>

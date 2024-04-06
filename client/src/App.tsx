@@ -2,15 +2,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Landing from "./components/landing";
 import Auth from "./components/auth";
 import Dashboard from "./comps/Dashboard";
-import Map from "./components/Map";
 import Events from "./components/events";
 import "./App.css";
 import "./index.css";
-
 import "./App.css";
 import Updates from "./comps/Updates";
 import Home from "./Home";
-
+import Map from "./components/Map";
 
 function App() {
   return (
