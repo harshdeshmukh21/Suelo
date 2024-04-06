@@ -8,13 +8,13 @@ const rootElement = document.getElementById("root");
 const root = createRoot(rootElement!);
 
 root.render(
-   <Auth0Provider
-      domain="harshdeshmukh21.us.auth0.com"
-      clientId="5jvESFtGYzACows13qC8YZCykK3A5E0s"
-      authorizationParams={{
-         redirect_uri: window.location.origin,
-      }}
-   >
-      <App />
-   </Auth0Provider>
+  <Auth0Provider
+    domain="harshdeshmukh21.us.auth0.com"
+    clientId="5jvESFtGYzACows13qC8YZCykK3A5E0s"
+    authorizationParams={{
+      redirect_uri: "http://localhost:5173/dashboard",
+    }}
+  >
+    <App />
+  </Auth0Provider>
 );

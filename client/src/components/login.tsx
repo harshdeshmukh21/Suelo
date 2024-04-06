@@ -1,16 +1,34 @@
+import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-// import "./login.css";
+import { useNavigate } from "react-router-dom";
 
 const LoginButton = () => {
-  const { loginWithRedirect, user } = useAuth0();
+  const navigate = useNavigate();
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
-  // Correctly use console.log to print the user information
-  console.log("Current User:", user);
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(isAuthenticated);
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = async () => {
+    await loginWithRedirect();
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <button className="text-black mt-4 font-montserrat opacity-60 text-xs" onClick={() => loginWithRedirect()}>
+    <button
+      className="text-black mt-4 font-montserrat opacity-60 text-xs"
+      onClick={handleLogin}
+    >
       Log In
     </button>
   );
 };
+
 export default LoginButton;

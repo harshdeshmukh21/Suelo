@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl, { LngLatLike } from "mapbox-gl";
 import "../components/Map.css"; // Import CSS file for custom styling
+import Sidebar from "@/comps/Side-bar";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+// import bg from "../assets/bg.jpeg";
 
 interface ClassResult {
   survey_number: string;
@@ -89,27 +92,52 @@ const Map: React.FC = () => {
           console.error("Error fetching reverse geocoding data:", error);
         });
     });
+    const geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl,
+      placeholder: "Search for a location",
+    });
+
+    map.addControl(geocoder);
 
     return () => map.remove();
   }, []);
 
   return (
-    <div>
-      <div ref={mapContainerRef} className="map" />
-      {classResult && (
-        <div>
-          <h3>Class Result:</h3>
-          <p>Survey Number: {classResult.survey_number}</p>
-          <p>State/UT: {classResult.state_or_ut}</p>
-          <p>Class: {classResult.class}</p>
+    <div
+      className="whole bg-cover bg-center text-sm"
+      // style={{ backgroundImage: `url(${bg})` }}
+    >
+      <div className="flex">
+        <Sidebar />
+        <div className="">
+          <h2 className="pl-[50px] mt-12 font-bold">YIELD ATLAS.</h2>
+          <div
+            ref={mapContainerRef}
+            className=" w-[650px] h-[500px] ml-[5vw] mt-[5%] bg-[#171717] p-2"
+          />
         </div>
-      )}
-      {cropSuggestion && (
-        <div>
-          <h3>Crop Suggestion:</h3>
-          <p>{cropSuggestion.cropSuggestion}</p>
-        </div>
-      )}
+      </div>
+      <div className="flex-row ml-[100px]  h-[500px] mt-130px">
+        {classResult && (
+          <div className="flex-row w-[300px] font-light">
+            <h3 className="font-bold">Class Result-</h3>
+            <p className="font-semibold">
+              Survey Number: {classResult.survey_number}
+            </p>
+            <p className="font-semibold text-sm">
+              State/UT: {classResult.state_or_ut}
+            </p>
+            <p className="font-semibold text-sm">Class: {classResult.class}</p>
+          </div>
+        )}
+        {cropSuggestion && (
+          <div className="mt-[40px] pr-[10px]">
+            <h3 className="font-semibold text-sm">Crop Suggestion:</h3>
+            <p>{cropSuggestion.cropSuggestion}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
