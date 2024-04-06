@@ -70,12 +70,7 @@ export default function TableDemo() {
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={4}>Your Rank</TableCell>
-          <TableCell className="text-right">2,500</TableCell>
-        </TableRow>
-      </TableFooter>
+
     </Table>
   );
 }
