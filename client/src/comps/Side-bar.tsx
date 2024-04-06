@@ -17,19 +17,19 @@ const Sidebar = () => {
         </Button>
         <Button
           className="m-1 font-white text-white focus:text-white active:text-white"
-          variant="ghost" onClick={() => navigate("/events/*")}
+          variant="ghost" onClick={() => navigate("/events")}
         >
           Activities
         </Button>
         <Button
           className="m-1 text-white focus:text-white active:text-white"
-          variant="ghost" onClick={() => navigate("/updates/*")}
+          variant="ghost" onClick={() => navigate("/updates")}
         >
           Updates
         </Button>
         <Button
           className="m-1 text-white focus:text-white active:text-white"
-          variant="ghost" onClick={() => navigate("/yieldatlas/*")}
+          variant="ghost" onClick={() => navigate("/yieldatlas")}
         >
           Map
         </Button>

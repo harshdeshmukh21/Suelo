@@ -7,47 +7,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import avatar from './avatar.png'
 
 const ranks = [
   {
+    Avatar: avatar,
     Name: "Arya",
-
-    ramk: "1",
+    Rank: "1",
     Score: "2000",
   },
   {
+    Avatar: avatar,
     Name: "Atharva",
-
-    ramk: "2",
+    Rank: "2",
     Score: "1900",
   },
   {
+    Avatar: avatar,
     Name: "Harsh",
-
-    ramk: "3",
+    Rank: "3",
     Score: "1700",
   },
   {
+    Avatar: avatar,
     Name: "Sahil",
-
-    ramk: "4",
+    Rank: "4",
     Score: "1700",
   },
   {
+    Avatar: avatar,
     Name: "Harsh",
-
-    ramk: "5",
+    Rank: "5",
     Score: "1700",
   },
 ];
 
 export default function TableDemo() {
   return (
-    <Table className="text-white mt-8 rounded-lg m-8 h-[350px] w-[90%] bg-[#1F2114]">
+    <Table className="text-white mt-8 rounded-xl m-8 h-[350px] w-[90%] bg-[#1F2114]">
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Profile</TableHead>
-          <TableHead> Name</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Rank</TableHead>
           <TableHead className="text-right">Score</TableHead>
         </TableRow>
@@ -55,10 +56,12 @@ export default function TableDemo() {
       <TableBody>
         {ranks.map((rank, index) => (
           <TableRow key={index}>
+            <TableCell>
+              <img src={rank.Avatar} alt="Avatar" className="w-8 h-8 rounded-full" />
+            </TableCell>
             <TableCell>{rank.Name}</TableCell>
-            <TableCell>{rank.ramk}</TableCell>
+            <TableCell>{rank.Rank}</TableCell>
             <TableCell className="text-right">{rank.Score}</TableCell>
-            <TableCell></TableCell>
           </TableRow>
         ))}
       </TableBody>

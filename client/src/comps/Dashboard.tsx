@@ -50,7 +50,7 @@ export default function Dashboard() {
             <div className="right w-full ml-8">
                 <div className="upper flex flex-row w-full">
                     <div className="flex flex-row justify-start w-full items-center p-4">
-                        <h1 className="text-black text-xl ">Hello User</h1>
+                        <h1 className="text-black text-2xl font-medium">Hello User!</h1>
                     </div>
 
                     <div className="flex flex-row w-full items-end justify-end p-4">
@@ -77,10 +77,10 @@ export default function Dashboard() {
                         </Card>
                     </div>
                     <div className="w-full flex flex-row ">
-                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
-                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
-                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
-                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">Trees Planted</h1><h2 className="text-8xl m-2">100</h2></div>
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">Involved in Activities</h1><h2 className="text-8xl m-2">10</h2></div>
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">commits</h1><h2 className="text-8xl m-2">50</h2></div>
+                        <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">types of plants discovered</h1><h2 className="text-8xl m-2">30</h2></div>
                     </div>
                 </div>
                 <div className="flex flex-row"><Remainder />

@@ -18,10 +18,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/yieldatlas/*" element={<Map />} />
-        <Route path="/events/*" element={<Events />} />
-        <Route path="/updates/*" element={<Updates />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/yieldatlas" element={<Map />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/updates" element={<Updates />} />
       </Routes>
     </Router>
   );
