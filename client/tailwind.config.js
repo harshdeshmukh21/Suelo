@@ -1,19 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-<<<<<<< Updated upstream
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-=======
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/flowbite/**/*.js"
->>>>>>> Stashed changes
   ],
   theme: {
-<<<<<<< Updated upstream
     container: {
       center: true,
       padding: "2rem",
@@ -41,13 +37,7 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),    require('flowbite/plugin')],
 };
-=======
-    extend: {},
-  },
-  plugins: [
-    require('flowbite/plugin')
-]
-}
->>>>>>> Stashed changes
+  
+
