@@ -31,7 +31,6 @@ const Sidebar = () => {
         >
           Map
         </Button>
-        <DialogDemo />
       </div>
     </div>
   );

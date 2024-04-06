@@ -1,14 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
+  darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -23,9 +22,6 @@ export default {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
-        backgroundImage: {
-          "custom-bg": "url('/assets/backgrounds/BG-Dark.png')",
-        },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
@@ -37,7 +33,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"),    require('flowbite/plugin')],
-};
-  
-
+  plugins: [require("tailwindcss-animate")],
+}

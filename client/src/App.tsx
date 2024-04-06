@@ -8,6 +8,8 @@ import "./App.css";
 import "./index.css";
 
 import "./App.css";
+import Updates from "./comps/Updates";
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/yieldatlas/*" element={<Map />} />
         <Route path="/events/*" element={<Events />} />
+        <Route path="/updates/*" element={<Updates />} />
       </Routes>
     </Router>
   );

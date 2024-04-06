@@ -15,13 +15,13 @@ export default function CreateAct() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Edit\ Profile</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Create an Activity</DialogTitle>
           <DialogDescription>
-            You can create a 
+            You can create a
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
