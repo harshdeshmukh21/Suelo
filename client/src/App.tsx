@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Auth from "./components/auth";
 import Dashboard from "./comps/Dashboard";
 import Map from "./components/Map";
-// import Events from "./components/events";
+import Events from "./components/events";
 import "./App.css";
 import "./index.css";
 
@@ -17,7 +17,7 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/yieldatlas/*" element={<Map />} />
-        {/* <Route path="/events/*" element={<Events />} /> */}
+        <Route path="/events/*" element={<Events />} />
       </Routes>
     </Router>
   );

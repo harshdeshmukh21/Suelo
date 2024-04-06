@@ -8,10 +8,7 @@ const LoginButton = () => {
   console.log("Current User:", user);
 
   return (
-    <button
-      className="text-black mt-4 font-montserrat opacity-60 text-xs"
-      onClick={() => loginWithRedirect()}
-    >
+    <button className="text-black mt-4 font-montserrat opacity-60 text-xs" onClick={() => loginWithRedirect()}>
       Log In
     </button>
   );
