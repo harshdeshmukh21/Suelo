@@ -5,14 +5,11 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-<<<<<<< Updated upstream
 } from '@/components/card';
-import Sidebar from './Side-bar';
+
 import { Card } from '@/components/card';
-=======
-} from "@/components/ui/card.tsx"
+
 import Sidebar from "./Side-bar";
->>>>>>> Stashed changes
 
 export default function Dashboard() {
     const [highlightedUpdates, setHighlightedUpdates] = useState([
