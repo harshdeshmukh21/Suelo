@@ -9,13 +9,14 @@ import "./index.css";
 
 import "./App.css";
 import Updates from "./comps/Updates";
+import Home from "./Home";
 
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<Landing />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/yieldatlas/*" element={<Map />} />
