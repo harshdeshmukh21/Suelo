@@ -9,11 +9,11 @@ import {
 import { Card } from "@/components/card";
 import Sidebar from "./Side-bar";
 import Remainder from "./Remainder";
-import Leaderboardwidget from "./Leaderboard/Leaderboardwidget";
+import Leaderboardwidget from "./Leaderboardwidget";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Dashboard() {
-  const { user, isLoading } = useAuth0();
+  const { user } = useAuth0();
 
   const [highlightedUpdates] = useState([
     {
@@ -30,6 +30,7 @@ export default function Dashboard() {
     },
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,17 +42,13 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [highlightedUpdates]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div className="text-white flex">
+    <div className="text-white flex ">
       <Sidebar />
       <div className="right w-full ml-8">
         <div className="upper flex flex-row w-full">
           <div className="flex flex-row justify-start w-full items-center p-4">
-            <h1 className="text-black text-xl">
+            <h1 className="text-black text-xl ">
               Hello {user ? user.name : "User"}
             </h1>
           </div>
@@ -69,7 +66,7 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle>High Lighted Updates</CardTitle>
               </CardHeader>
-              <CardContent className="overflow-scroll bg-white text-black rounded-md p-0 h-[100px]">
+              <CardContent className="overflow-scroll bg-white text-black rounded-md p-0 h-[100px] ">
                 <CardHeader>
                   <CardTitle>
                     {highlightedUpdates[currentIndex].title}
@@ -82,10 +79,10 @@ export default function Dashboard() {
             </Card>
           </div>
           <div className="w-full flex flex-row ">
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">Trees Planted</h1><h2 className="text-8xl m-2">100</h2></div>
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">Involved in Activities</h1><h2 className="text-8xl m-2">10</h2></div>
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">commits</h1><h2 className="text-8xl m-2">50</h2></div>
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"><h1 className="m-2">types of plants discovered</h1><h2 className="text-8xl m-2">30</h2></div>
+            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
+            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]"></div>
           </div>
         </div>
         <div className="flex flex-row">

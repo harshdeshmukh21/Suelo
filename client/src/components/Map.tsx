@@ -9,6 +9,7 @@ interface ClassResult {
   survey_number: string;
   state_or_ut: string;
   class: string;
+  Owner: string;
 }
 
 interface CropSuggestionResponse {
@@ -51,7 +52,7 @@ const Map: React.FC = () => {
         .then((data) => {
           const areaName = data.features[0].place_name;
           console.log(
-            `Latitude: ${lat}, Longitude: ${lng}, Area Name: ${areaName}`
+            `Latitude: ${lat}, Longitude: ${lng}, Area Name: ${areaName},`
           );
 
           // Call the first backend API (get_class) with the obtained longitude, latitude, and area name
@@ -60,7 +61,11 @@ const Map: React.FC = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ latitude: lat, longitude: lng, areaName }),
+            body: JSON.stringify({
+              latitude: lat,
+              longitude: lng,
+              areaName,
+            }),
           })
             .then((response) => response.json())
             .then((data: ClassResult) => {
@@ -114,7 +119,7 @@ const Map: React.FC = () => {
           <h2 className="pl-[50px] mt-12 font-bold">YIELD ATLAS.</h2>
           <div
             ref={mapContainerRef}
-            className=" w-[650px] h-[500px] ml-[5vw] mt-[5%] "
+            className=" w-[650px] h-[500px] ml-[5vw] mt-[5%] bg-[#171717] p-2"
           />
         </div>
       </div>
@@ -129,6 +134,7 @@ const Map: React.FC = () => {
               State/UT: {classResult.state_or_ut}
             </p>
             <p className="font-semibold text-sm">Class: {classResult.class}</p>
+            <p className="font-semibold text-sm"> Owner: {classResult.Owner}</p>
           </div>
         )}
         {cropSuggestion && (
