@@ -44,16 +44,16 @@ const Updates = () => {
                 </div>
                 {isTextareaVisible && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                        <div className="bg-white p-4 rounded shadow">
+                        <div className="bg-white w-[500px] p-4 rounded shadow">
                             <Textarea value={newUpdate} onChange={handleInputChange} className="w-full text-black" />
                             <div className="flex justify-between mt-2">
-                                <button onClick={handleClose} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
-                                <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                                <button onClick={handleClose} className="bg-[#1F2114]  text-white font-bold py-2 px-4 rounded">Close</button>
+                                <button onClick={handleSubmit} className="bg-[#1F2114]  text-white   font-bold py-2 px-4 rounded">Submit</button>
                             </div>
                         </div>
                     </div>
                 )}
-                <button onClick={() => setIsTextareaVisible(true)} className="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Update</button>
+                <button onClick={() => setIsTextareaVisible(true)} className="fixed bottom-4 right-4 bg-[#1F2114] hover:bg-[blue-700] text-white font-bold py-2 px-4 rounded">Add Update</button>
             </div>
         </div>
     );
