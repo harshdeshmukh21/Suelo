@@ -104,4 +104,36 @@ console.log(localStorage.getItem("username"));
 //   });
 // });
 
+async function addActivity(name, description, location) {
+  try {
+    // Reference to the 'Activities' collection
+    const activitiesRef = collection(db, 'Activities');
+
+    // Add a new document with a generated id.
+    const docRef = await addDoc(activitiesRef, {
+      name: name,
+      description: description,
+      location: location
+    });
+
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+onSnapshot(activitiesRef, (querySnapshot) => {
+  const activitiesContainer = document.getElementById('activities-container');
+  activitiesContainer.innerHTML = ''; // Clear previous activities
+
+  querySnapshot.forEach((doc) => {
+      const activity = doc.data();
+      const activityDiv = document.createElement('div');
+      activityDiv.innerHTML = `
+          <h2>${activity.name}</h2>
+          <p>Location: ${activity.location}</p>
+      `;
+      activitiesContainer.appendChild(activityDiv);
+  });
+});
 export { db };

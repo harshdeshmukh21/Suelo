@@ -67,7 +67,8 @@ app.post('/get_class', (req, res) => {
         res.json({
             survey_number: closestRow['Survey Number'],
             state_or_ut: closestRow['Name of State / UT'],
-            class: closestRow['Class']
+            class: closestRow['Class'],
+            Owner: closestRow['Owner']
         });
     } else {
         res.status(404).json({ error: 'No data found' });
