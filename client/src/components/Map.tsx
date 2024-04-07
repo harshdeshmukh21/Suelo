@@ -111,7 +111,7 @@ const Map: React.FC = () => {
   return (
     <div
       className="whole bg-cover bg-center text-sm"
-      // style={{ backgroundImage: `url(${bg})` }}
+    // style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="flex">
         <Sidebar />
