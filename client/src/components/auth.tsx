@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginButton from "../components/login";
 import logo from "../assets/logo.svg";
+import { collection, addDoc } from "firebase/firestore";
+import db from "../Firebase"; // Import the initialized Firebase instance
 
 const Auth: React.FC = () => {
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const saveDataToFirebase = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        username: username,
+        emailid: email,
+        password: password,
+      });
+      alert("Signup Successful");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
+
   return (
     <>
       <div
@@ -29,18 +48,27 @@ const Auth: React.FC = () => {
                 type="text"
                 placeholder="Username"
                 className="font-montserrat rounded bg-white text-black p-4 outline-none mt-4 mb-1 h-[50px] w-[300px]"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <input
                 type="email"
                 placeholder="Email id"
                 className="font-montserrat rounded bg-white text-black p-4 outline-none mb-1 h-[50px] w-[300px]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 type="password"
                 placeholder="Password"
                 className="font-montserrat rounded bg-white text-black p-4 outline-none mb-1 h-[50px] w-[300px]"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <button className="font-montserrat bg-[#1F2114] text-white p-5 rounded mt-6 text-center h-[20px] flex flex-col justify-center">
+              <button
+                className="font-montserrat bg-[#1F2114] text-white p-5 rounded mt-6 text-center h-[20px] flex flex-col justify-center"
+                onClick={saveDataToFirebase}
+              >
                 Sign Up
               </button>
             </div>
@@ -48,7 +76,7 @@ const Auth: React.FC = () => {
               <div className="text-black mt-4 font-montserrat opacity-60 text-xs">
                 Already have an account?
               </div>
-              <LoginButton></LoginButton>
+              <LoginButton />
             </div>
           </div>
         </div>
