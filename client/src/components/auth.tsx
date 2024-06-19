@@ -1,25 +1,20 @@
 import React, { useState } from "react";
-import LoginButton from "../components/login";
+import { auth } from "../Firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import logo from "../assets/logo.svg";
-import { collection, addDoc } from "firebase/firestore";
-import db from "../Firebase"; // Import the initialized Firebase instance
+import { useNavigate } from "react-router-dom";
 
 const Auth: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const navigate = useNavigate();
+
   const saveDataToFirebase = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        username: username,
-        emailid: email,
-        password: password,
-      });
-      alert("Signup Successful");
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => alert("User created successfully"))
+      .then(() => navigate("/dashboard"));
   };
 
   return (
@@ -76,7 +71,12 @@ const Auth: React.FC = () => {
               <div className="text-black mt-4 font-montserrat opacity-60 text-xs">
                 Already have an account?
               </div>
-              <LoginButton />
+              <button
+                className="mt-4 font-montserrat opacity-40 text-xs"
+                onClick={() => navigate("/login")}
+              >
+                Log in
+              </button>
             </div>
           </div>
         </div>
