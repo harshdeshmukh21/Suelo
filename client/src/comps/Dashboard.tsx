@@ -5,16 +5,15 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  Card,
 } from "@/components/card";
-import { Card } from "@/components/card";
 import Sidebar from "./Side-bar";
 import Remainder from "./Remainder";
 import Leaderboardwidget from "./Leaderboardwidget";
-import { useAuth0 } from "@auth0/auth0-react";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 
 export default function Dashboard() {
-  const { user } = useAuth0();
-
+  const [user, setUser] = useState<User | null>(null);
   const [highlightedUpdates] = useState([
     {
       title: "Harsh loves Trees",
@@ -30,7 +29,15 @@ export default function Dashboard() {
     },
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [] = useState(true);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,22 +49,24 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [highlightedUpdates]);
 
+  const StatCard = ({ title, value }: { title: string; value: string }) => (
+    <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px] flex-col">
+      <p className="ml-7 mt-6 text-center">{title}</p>
+      <p className="text-[100px] text-center mt-[-10px]">{value}</p>
+    </div>
+  );
+
   return (
     <div className="text-white flex overflow-hidden">
       <Sidebar />
       <div className="right w-full ml-8">
-        <div className="upper flex flex-row w-full">
-          <div className="flex flex-row justify-start w-full items-center p-4">
-            <h1 className="text-black text-xl ">
-              Hello {user ? user.name : "User"}
-            </h1>
-          </div>
-
-          <div className="flex flex-row w-full items-end justify-end p-4 mr-4 gap-8">
-            <div className="text-black p-2 flex flex-row bg-gray-100 rounded-3xl border border-gray-100">
-              <h1 className="text-[14px] mr-2">2000</h1>
-              <img src={star} className="h-5" />
-            </div>
+        <div className="upper flex flex-row w-full justify-between items-center p-4">
+          <h1 className="text-black text-xl">
+            Hello {user ? user.displayName : "User"}
+          </h1>
+          <div className="text-black p-2 flex flex-row bg-gray-100 rounded-3xl border border-gray-100 mr-6">
+            <h1 className="text-[14px] mr-2">2000</h1>
+            <img src={star} className="h-5" alt="Star" />
           </div>
         </div>
         <div className="flex flex-row justify-center gap-0">
@@ -87,22 +96,10 @@ export default function Dashboard() {
             </Card>
           </div>
           <div className="w-full flex flex-row mr-[35px] gap-0">
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px] flex-col">
-              <p className="ml-12 mt-6">Trees Planted</p>
-              <p className="text-[100px] ml-3 mt-[-10px]">100</p>
-            </div>
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]">
-              <p className="ml-7 mt-6">Involved in Activities</p>
-              <p className="text-[100px] ml-3 mt-[-10px]">120</p>
-            </div>
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]">
-              <p className="ml-16 mt-6">Commits</p>
-              <p className="text-[100px] ml-10 mt-[-10px]">75</p>
-            </div>
-            <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px]">
-              <p className="ml-10 mt-6">Plants discovered</p>
-              <p className="text-[100px] ml-12 mt-[-10px]">30</p>
-            </div>
+            <StatCard title="Trees Planted" value="100" />
+            <StatCard title="Involved in Activities" value="120" />
+            <StatCard title="Commits" value="75" />
+            <StatCard title="Plants discovered" value="30" />
           </div>
         </div>
         <div className="flex flex-row">
