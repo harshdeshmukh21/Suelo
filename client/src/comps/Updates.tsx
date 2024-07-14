@@ -33,7 +33,7 @@ const Updates = () => {
           {[...Array(7)].map((_, index) => (
             <div
               key={index}
-              className="w-full bg-[#1F2114] h-[100px] mt-8 mb-2 items-center shadow-lg rounded-lg shadow-olive-500/40 p-3 flex flex-col"
+              className="w-full bg-[#171717] h-[100px] mt-8 mb-2 items-center shadow-lg rounded-lg shadow-olive-500/40 p-3 flex flex-col"
             >
               <div className="flex flex-row items-center space-x-3 w-full">
                 <img src={user?.picture} className="h-10 w-10 rounded-full" />
@@ -58,13 +58,13 @@ const Updates = () => {
               <div className="flex justify-between mt-2">
                 <button
                   onClick={handleClose}
-                  className="bg-[#1F2114]  text-white font-bold py-2 px-4 rounded"
+                  className="bg-[#171717]  text-white font-bold py-2 px-4 rounded"
                 >
                   Close
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="bg-[#1F2114]  text-white   font-bold py-2 px-4 rounded"
+                  className="bg-[#171717]  text-white   font-bold py-2 px-4 rounded"
                 >
                   Submit
                 </button>
@@ -74,7 +74,7 @@ const Updates = () => {
         )}
         <button
           onClick={() => setIsTextareaVisible(true)}
-          className="fixed bottom-4 right-4 bg-[#1F2114] hover:bg-[blue-700] text-white font-bold py-2 px-4 rounded"
+          className="fixed bottom-4 right-4 bg-[#171717] hover:bg-[blue-700] text-white font-bold py-2 px-4 rounded"
         >
           Add Update
         </button>

@@ -50,7 +50,7 @@ export default function Dashboard() {
   }, [highlightedUpdates]);
 
   const StatCard = ({ title, value }: { title: string; value: string }) => (
-    <div className="bg-[#1F2114] w-[200px] rounded-xl ml-2 h-[200px] flex-col">
+    <div className="bg-[#171717] w-[200px] rounded-xl ml-2 h-[200px] flex-col">
       <p className="ml-7 mt-6 text-center">{title}</p>
       <p className="text-[100px] text-center mt-[-10px]">{value}</p>
     </div>
@@ -71,7 +71,7 @@ export default function Dashboard() {
         </div>
         <div className="flex flex-row justify-center gap-0">
           <div className="w-2/4 flex justify-center">
-            <Card className="bg-[#1F2114] h-[200px] text-white w-[380px] mr-[30px] flex justify-center items-center">
+            <Card className="bg-[#171717] h-[200px] text-white w-[380px] mr-[30px] flex justify-center items-center">
               <div className="w-[350px]">
                 <CardHeader>
                   <CardTitle>

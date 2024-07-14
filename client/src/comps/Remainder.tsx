@@ -1,6 +1,6 @@
 const Remainder = () => {
   return (
-    <div className="w-[90%] mt-8  h-[350px]  overflow-scroll    rounded-xl bg-[#1F2114] p-4 ">
+    <div className="w-[90%] mt-8  h-[350px]  overflow-scroll    rounded-xl bg-[#171717] p-4 ">
       <h1 className="text-[24px] font-semibold pb-2">Joined Activities</h1>
       <div className="w-full outline mt-2 mb-4 h-[80px] items-center shadow-lg rounded-lg shadow-olive-500/40 p-3 flex">
         <div className="flex flex-col w-full">

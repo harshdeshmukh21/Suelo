@@ -14,7 +14,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen bg-[#1F2114] flex p-5 items-center flex-col justify-content-around">
+    <div className="h-screen bg-[#171717] flex p-5 items-center flex-col justify-content-around">
       <div className="flex items-center flex-row">
         <img src={logo} className="h-7 w-7" />
         <h1 className="ml-2 text-xl text-white font-Montserrat">Suelo</h1>

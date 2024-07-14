@@ -40,7 +40,7 @@ export default function TableDemo() {
   const { user } = useAuth0();
 
   return (
-    <Table className="text-white mt-8 rounded-lg m-8 h-[350px] w-[90%] bg-[#1F2114]">
+    <Table className="text-white mt-8 rounded-lg m-8 h-[350px] w-[90%] bg-[#171717]">
       <TableHeader>
         <TableRow className="flex-row justify-center items-center">
           <TableHead>

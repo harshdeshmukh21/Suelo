@@ -112,7 +112,7 @@ const Events = () => {
         </div>
 
         <div className="p-2 h-[400px] w-[100%] flex flex-row mt-[-330px]">
-          <div className="w-[90%] h-[350px] overflow-scroll rounded-xl bg-[#1F2114] p-4 mt-[-20px]">
+          <div className="w-[90%] h-[350px] overflow-scroll rounded-xl bg-[#171717] p-4 mt-[-20px]">
             <h1 className="text-[18px] font-semibold pb-2 text-white">
               Top Events
             </h1>
@@ -145,7 +145,7 @@ const Events = () => {
               </div>
             ))}
           </div>
-          <div className="w-[90%] h-[350px] overflow-scroll rounded-xl bg-[#1F2114] p-4 mt-[-20px] ml-8">
+          <div className="w-[90%] h-[350px] overflow-scroll rounded-xl bg-[#171717] p-4 mt-[-20px] ml-8">
             <h1 className="text-[18px] font-semibold pb-2 text-white">
               Joined Activities
             </h1>
@@ -171,7 +171,7 @@ const Events = () => {
                 </div>
               ))}
           </div>
-          <div className="w-[90%] h-[350px] overflow-scroll rounded-xl bg-[#1F2114] p-4 mt-[-20px] ml-8">
+          <div className="w-[90%] h-[350px] overflow-scroll rounded-xl bg-[#171717] p-4 mt-[-20px] ml-8">
             <h1 className="text-[18px] font-semibold pb-2 text-white">
               Created Activities
             </h1>
