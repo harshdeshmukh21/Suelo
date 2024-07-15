@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Landing from "./components/landing";
-import Auth from "./components/auth";
-import Login from "./components/login";
+import SignUp from "./components/SignUp";
+import Login from "./components/SignIn";
 import Dashboard from "./comps/Dashboard";
 import Events from "./components/events";
 import "./App.css";
@@ -27,8 +27,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/SignIn" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/yieldatlas" element={<Map />} />
         <Route path="/events" element={<Events />} />

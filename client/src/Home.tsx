@@ -16,7 +16,7 @@ const Home = () => {
       <div className="flex flex-row items-center justify-center">
         <h1 className="text-[200px] font-bold text-white">Suelo</h1>
       </div>
-      <Button className="bg-[#1F2114] " onClick={() => navigate("/auth")}>
+      <Button className="bg-[#1F2114] " onClick={() => navigate("auth")}>
         Get Started
       </Button>
     </div>
