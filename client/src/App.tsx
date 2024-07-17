@@ -21,7 +21,7 @@ function App() {
       } else {
         console.log("You are logged out");
       }
-    });
+    }); 
   }, []);
   return (
     <Router>

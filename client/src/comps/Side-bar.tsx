@@ -7,11 +7,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { logout } = useAuth0();
 
-  const handleLogout = () => {
-    logout();
-  };
+  // const handleLogout = () => {
+  //   logout();
+  // };
 
   return (
     <div className="h-screen bg-[#171717] flex p-5 items-center flex-col justify-content-around">
@@ -57,7 +56,7 @@ const Sidebar = () => {
       </a> */}
 
       <div className="h-9 w-9 mt-[350px]">
-        <img src={logoutImage} alt="logout" onClick={handleLogout} />
+        <img src={logoutImage} alt="logout" onClick={() => navigate("/")} />
       </div>
     </div>
   );
