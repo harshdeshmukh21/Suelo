@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Side-bar";
-import { Textarea } from "@/components/ui/textarea";
 import { auth, db } from "@/Firebase";
 import {
   collection,
@@ -9,7 +8,6 @@ import {
   query,
   orderBy,
   Timestamp,
-  where,
 } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,11 +21,15 @@ interface Update {
   highlighted: boolean;
 }
 
+
 const Updates = () => {
   const [newUpdate, setNewUpdate] = useState("");
-  const [isTextareaVisible, setIsTextareaVisible] = useState(false);
   const [updates, setUpdates] = useState<Update[]>([]);
   const user = auth.currentUser;
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewUpdate(event.target.value);
+  };
 
   useEffect(() => {
     const updatesCollectionRef = collection(db, "updates");
@@ -44,9 +46,7 @@ const Updates = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewUpdate(event.target.value);
-  };
+
 
   const handleSubmit = async () => {
     if (!user || !newUpdate.trim()) return;
@@ -60,92 +60,52 @@ const Updates = () => {
         createdAt: Timestamp.now(),
         highlighted: true,
       });
-
-      setNewUpdate("");
-      setIsTextareaVisible(false);
     } catch (error) {
       console.error("Error adding update: ", error);
       alert("Failed to add update. Please try again.");
     }
   };
 
-  const handleClose = () => {
-    setNewUpdate("");
-    setIsTextareaVisible(false);
-  };
-
   return (
-    <div className="flex relative">
+    <div className="flex flex-row flex-wrap bg-black">
       <Sidebar />
-      <div className="flex flex-col items-center w-full text-white h-screen justify-center">
-        <h1 className="font-bold text-[30px] text-[#1F2114] mb-5 mt-2">
-          Updates
-        </h1>
-        <Input
-          type="text"
-          className="w-[30vw] p-9 border text-black"
-          placeholder="What is happening?"
-          style={{ border: "1px solid #171717" }}
-        />
-        <Button type="submit" className="mt-2 ml-[26vw]">
-          Post
-        </Button>
-
-        <div className="list overflow-scroll p-2 h-[600px] w-[35%]">
+      <div className="flex-1 h-screen flex flex-col p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto h-[95%]">
           {updates.map((update) => (
             <div
               key={update.id}
-              className="w-full bg-[#171717] h-auto min-h-[100px] mt-8 mb-2 items-center shadow-lg rounded-lg shadow-olive-500/40 p-3 flex flex-col"
+              className={`w-full bg-[#171717] text-gray-200 p-4 shadow-lg rounded-lg shadow-olive-500/40 flex flex-col ${Math.random() > 0.5 ? 'row-span-1' : 'row-span-2'}`}
             >
-              <div className="flex flex-row items-center space-x-3 w-full">
+              <div className="flex flex-row font-medium items-center space-x-3 w-full">
                 <img
                   src={update.authorPicture}
-                  className="h-10 w-10 rounded-full"
+                  className="h-10"
                   alt={update.authorName}
                 />
-                <h1>{update.authorName}</h1>
-                <span className="ml-auto text-gray-400">
+                <h1 className="text-white">{update.authorName}</h1>
+                <span className="ml-auto text-gray-400 text-sm font-normal">
                   {update.createdAt.toDate().toLocaleDateString()}{" "}
                   {update.createdAt.toDate().toLocaleTimeString()}
                 </span>
               </div>
-              <div className="flex w-full">
-                <h3 className="text-gray-400 mt-2">{update.content}</h3>
+              <div className="flex w-fit mt-2 ">
+                <h3 className="text-white">{update.content}</h3>
               </div>
             </div>
           ))}
         </div>
-        {isTextareaVisible && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white w-[500px] p-4 rounded shadow">
-              <Textarea
-                value={newUpdate}
-                onChange={handleInputChange}
-                className="w-full text-black"
-              />
-              <div className="flex justify-between mt-2">
-                <button
-                  onClick={handleClose}
-                  className="bg-[#171717] text-white font-bold py-2 px-4 rounded"
-                >
-                  Close
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  className="bg-[#171717] text-white font-bold py-2 px-4 rounded"
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        <button
-          onClick={() => setIsTextareaVisible(true)}
-          className="fixed bottom-4 right-4 bg-[#171717] hover:bg-[blue-700] text-white font-bold py-2 px-4 rounded"
-        >
-          Add Update
-        </button>
+        <div className="flex z-80 w-full items-end px-80 p-2 ">
+          <Input
+            type="text"
+            className="flex-1 border text-white rounded-l-md rounded-r-none placeholder:text-white"
+            placeholder="What is happening?"
+            value={newUpdate}
+            onChange={handleInputChange}
+          />
+          <Button type="submit" className="rounded-none hover:bg-black hover:text-white bg-white rounded-r-md  text-black" onClick={handleSubmit}>
+            Post
+          </Button>
+        </div>
       </div>
     </div>
   );
