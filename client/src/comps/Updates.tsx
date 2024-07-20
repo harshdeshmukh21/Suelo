@@ -11,6 +11,8 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface Update {
   id: string;
@@ -76,8 +78,20 @@ const Updates = () => {
     <div className="flex relative">
       <Sidebar />
       <div className="flex flex-col items-center w-full text-white h-screen justify-center">
-        <div className="list overflow-scroll p-2 h-[600px] w-[60%]">
-          <h1 className="font-bold text-[30px] text-[#1F2114]">Updates</h1>
+        <h1 className="font-bold text-[30px] text-[#1F2114] mb-5 mt-2">
+          Updates
+        </h1>
+        <Input
+          type="text"
+          className="w-[30vw] p-9 border text-black"
+          placeholder="What is happening?"
+          style={{ border: "1px solid #171717" }}
+        />
+        <Button type="submit" className="mt-2 ml-[26vw]">
+          Post
+        </Button>
+
+        <div className="list overflow-scroll p-2 h-[600px] w-[35%]">
           {updates.map((update) => (
             <div
               key={update.id}
