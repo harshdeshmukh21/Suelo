@@ -133,7 +133,7 @@ const Map: React.FC = () => {
 
   return (
     <div
-      className="whole bg-cover bg-center text-sm"
+      className="whole bg-cover bg-center text-sm bg-[#171717] h-[100vh]"
       // style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="flex">
@@ -142,18 +142,18 @@ const Map: React.FC = () => {
           <Sidebar />
         </div>
         <div className="">
-          <h2 className="pl-[50px] mt-12  ml-[30px] font-bold text-[30px] text-[#1F2114]">
+          <h2 className="pl-[50px] font-bold text-[30px] text-white mt-[-15vh] ml-[10vh]">
             Yield Atlas
           </h2>
           <div
             ref={mapContainerRef}
-            className=" w-[650px] h-[500px] ml-[5vw] mt-[5%] bg-[#171717] p-2 rounded-[10px]"
+            className=" w-[650px] h-[500px] mt-[5%] bg-[#171717] p-2 rounded-[10px] ml-[15vh]"
           />
         </div>
       </div>
-      <div className="flex-row ml-[60px]  h-[500px] mt-130px">
+      <div className="flex-row ml-[60px]  h-[500px] mt-130px text-white mt-[-8vh]">
         {classResult && (
-          <div className="flex-row w-[300px] font-light">
+          <div className="flex-row w-[300px] font-light bg-black p-4 rounded-md">
             <h3 className="font-bold">Class Result-</h3>
             <p className="font-semibold">
               Survey Number: {classResult.survey_number}
@@ -166,9 +166,11 @@ const Map: React.FC = () => {
           </div>
         )}
         {cropSuggestion && (
-          <div className="mt-[40px] pr-[10px] mr-[100px] border-[5px]">
-            <h3 className="font-semibold text-sm p-4">Crop Suggestion:</h3>
-            <p className="p-4">{cropSuggestion.cropSuggestion}</p>
+          <div className="mt-[20px] pr-[10px] mr-[100px] bg-black rounded-md text-white">
+            <h3 className="font-semibold text-sm p-4 text-[16px]">
+              Crop Suggestion:
+            </h3>
+            <p className="p-4 mt-[-20px]">{cropSuggestion.cropSuggestion}</p>
           </div>
         )}
       </div>

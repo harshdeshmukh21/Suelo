@@ -1,238 +1,597 @@
-import { useState, useEffect } from "react";
-import star from "./star.png";
+import Sidebar from "./Side-bar";
+import { Link } from "react-router-dom";
 import {
+  ChevronLeft,
+  ChevronRight,
+  Copy,
+  CreditCard,
+  File,
+  Home,
+  LineChart,
+  ListFilter,
+  MoreVertical,
+  Package,
+  Package2,
+  PanelLeft,
+  Search,
+  ShoppingCart,
+  Truck,
+  Users2,
+} from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
-  Card,
-} from "@/components/card";
-import Sidebar from "./Side-bar";
-import Leaderboardwidget from "./Leaderboardwidget";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { db } from "@/Firebase";
+} from "@/components/ui/card";
 import {
-  collection,
-  onSnapshot,
-  doc,
-  updateDoc,
-  arrayRemove,
-  query,
-  orderBy,
-  limit,
-  where,
-  Timestamp,
-} from "firebase/firestore";
-import { Button } from "@/components/ui/button";
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from "@/components/ui/pagination";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { auth } from "@/Firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from "react";
 
-interface Activity {
-  id: string;
-  name: string;
-  location: string;
-  participants?: string[];
-}
+const Dashboard = () => {
+  interface User {
+    displayName: string | null;
+    email: string | null;
+    photoURL: string | null;
+  }
 
-interface HighlightedUpdate {
-  id: string;
-  content: string;
-  authorName: string;
-  createdAt: Timestamp;
-}
-
-export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const [joinedActivities, setJoinedActivities] = useState<string[]>([]);
-  const [highlightedUpdates, setHighlightedUpdates] = useState<
-    HighlightedUpdate[]
-  >([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (currentUser) {
+        setUser({
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+        });
+      } else {
+        setUser(null);
+      }
     });
 
     return () => unsubscribe();
   }, []);
-
-  useEffect(() => {
-    const activitiesCollectionRef = collection(db, "activities");
-    const unsubscribe = onSnapshot(activitiesCollectionRef, (snapshot) => {
-      const fetchedActivities = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        name: doc.data().name,
-        location: doc.data().location,
-        participants: doc.data().participants || [],
-      }));
-      setActivities(fetchedActivities);
-
-      if (user) {
-        const userJoinedActivities = fetchedActivities
-          .filter((activity) => activity.participants.includes(user.uid))
-          .map((activity) => activity.id);
-        setJoinedActivities(userJoinedActivities);
-      }
-    });
-
-    return unsubscribe;
-  }, [user]);
-
-  useEffect(() => {
-    setLoading(true);
-    const updatesCollectionRef = collection(db, "updates");
-    const q = query(
-      updatesCollectionRef,
-      where("highlighted", "==", true),
-      orderBy("createdAt", "desc"),
-      limit(5)
-    );
-
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        const fetchedUpdates = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          content: doc.data().content,
-          authorName: doc.data().authorName,
-          createdAt: doc.data().createdAt,
-        }));
-        setHighlightedUpdates(fetchedUpdates);
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Error fetching updates:", error);
-        setLoading(false);
-      }
-    );
-
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === highlightedUpdates.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [highlightedUpdates]);
-
-  const leaveActivity = async (activityId: string) => {
-    if (!user) {
-      alert("Please log in to leave an activity");
-      return;
-    }
-
-    const activityRef = doc(db, "activities", activityId);
-
-    try {
-      await updateDoc(activityRef, {
-        participants: arrayRemove(user.uid),
-      });
-
-      setJoinedActivities(joinedActivities.filter((id) => id !== activityId));
-      alert("Successfully left the activity!");
-    } catch (error) {
-      console.error("Error leaving activity: ", error);
-      alert("Failed to leave the activity. Please try again.");
-    }
-  };
-
-  const StatCard = ({ title, value }: { title: string; value: string }) => (
-    <div className="bg-[#171717] w-[200px] rounded-xl ml-2 h-[200px] flex-col">
-      <p className="ml-7 mt-6 text-center">{title}</p>
-      <p className="text-[100px] text-center mt-[-10px]">{value}</p>
-    </div>
-  );
 
   return (
-    <div className="text-white flex overflow-hidden">
-      <Sidebar />
-      <div className="right w-full ml-8">
-        <div className="upper flex flex-row w-full justify-between items-center p-4">
-          <h1 className="text-black text-xl">
-            Hello {user ? user.displayName : "User"}
-          </h1>
-          <div className="text-black p-2 flex flex-row bg-gray-100 rounded-3xl border border-gray-100 mr-6">
-            <h1 className="text-[14px] mr-2">2000</h1>
-            <img src={star} className="h-5" alt="Star" />
+    <div className="flex min-h-screen w-full flex-col bg-[#171717]">
+      <Sidebar></Sidebar>
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+          <div className="text-m font-medium text-white ml-2">
+            {user ? `Hello, ${user.displayName}` : "Hello, Guest"}
           </div>
-        </div>
-        <div className="flex flex-row justify-center gap-0">
-          <div className="w-2/4 flex justify-center">
-            <Card className="bg-[#171717] h-[200px] text-white w-[380px] mr-[30px] flex justify-center items-center">
-              <div className="w-[350px]">
-                <CardHeader>
-                  <CardTitle>
-                    <div className="text-left text-[24px] font-semibold text-white mt-8">
-                      Highlighted Updates
-                    </div>
-                  </CardTitle>
+          <div className="relative ml-auto flex-1 md:grow-0">
+            {/* <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" /> */}
+            {/* <Input
+              type="search"
+              placeholder="Search..."
+              className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+            /> */}
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="overflow-hidden rounded-full"
+              >
+                {user && user.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="User avatar"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Users2 className="h-4 w-4" />
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </header>
+        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
+          <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+              <Card
+                className="sm:col-span-2 bg-black border-black rounded-md"
+                x-chunk="dashboard-05-chunk-0"
+              >
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-white">Daily Quote</CardTitle>
+                  <CardDescription className="max-w-lg leading-relaxed text-[#A1A1AA]">
+                    Introducing Our Dynamic Orders Dashboard for Seamless
+                    Management and Insightful Analysis.
+                  </CardDescription>
                 </CardHeader>
-                <CardContent className="overflow-scroll bg-white text-black flex justify-center items-center rounded-md h-[100px] mb-8">
-                  {loading ? (
-                    <p>Loading updates...</p>
-                  ) : highlightedUpdates.length === 0 ? (
-                    <p>No updates available.</p>
-                  ) : (
-                    <div className="flex flex-col justify-center items-center mt-[30px]">
-                      <CardHeader>
-                        <CardTitle>
-                          {highlightedUpdates[currentIndex]?.authorName ||
-                            "Anonymous"}
-                        </CardTitle>
-                        <CardDescription>
-                          {highlightedUpdates[currentIndex]?.content ||
-                            "No content"}
-                        </CardDescription>
-                      </CardHeader>
-                    </div>
-                  )}
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-          <div className="w-full flex flex-row mr-[35px] gap-0">
-            <StatCard title="Trees Planted" value="100" />
-            <StatCard title="Involved in Activities" value="120" />
-            <StatCard title="Commits" value="75" />
-            <StatCard title="Plants discovered" value="30" />
-          </div>
-        </div>
-        <div className="flex flex-row">
-          <div className="w-[90%] mt-8 h-[350px] overflow-scroll rounded-xl bg-[#171717] p-4">
-            <h1 className="text-[24px] font-semibold pb-2">
-              Joined Activities
-            </h1>
-            {activities
-              .filter((activity) => joinedActivities.includes(activity.id))
-              .map((activity) => (
-                <div
-                  key={activity.id}
-                  className="w-full outline mt-2 mb-4 h-[80px] items-center shadow-lg rounded-lg shadow-olive-500/40 p-3 flex"
-                >
-                  <div className="flex flex-col w-full">
-                    <h1>{activity.name}</h1>
-                    <p className="text-gray-500">{activity.location}</p>
+                <CardFooter></CardFooter>
+              </Card>
+              <Card
+                x-chunk="dashboard-05-chunk-1"
+                className="bg-black border-black rounded-md"
+              >
+                <CardHeader className="pb-2">
+                  <CardDescription className="text-[#A1A1AA]">
+                    Trees Planted
+                  </CardDescription>
+                  <CardTitle className="text-4xl text-white">329</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-xs text-muted-foreground text-[#A1A1AA]">
+                    +25% from last week
                   </div>
-                  <div className="flex items-end justify-end w-full">
-                    <Button
-                      className="bg-red-500 text-white transition duration-300 ease-in-out transform hover:scale-105 hover:bg-red-600"
-                      onClick={() => leaveActivity(activity.id)}
-                    >
-                      Leave
-                    </Button>
+                </CardContent>
+                <CardFooter>
+                  <Progress
+                    value={20}
+                    aria-label="12% increase"
+                    className="bg-white [&>div]:bg-[#088536]"
+                  />
+                </CardFooter>
+              </Card>
+              <Card
+                x-chunk="dashboard-05-chunk-2"
+                className="bg-black border-black rounded-md"
+              >
+                <CardHeader className="pb-2">
+                  <CardDescription className="text-[#A1A1AA]">
+                    Activities Joined
+                  </CardDescription>
+                  <CardTitle className="text-4xl text-white ">59</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-xs text-muted-foreground text-[#A1A1AA]">
+                    +10% from last month
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Progress
+                    value={50}
+                    aria-label="12% increase"
+                    className="bg-white [&>div]:bg-[#088536]"
+                  />
+                </CardFooter>
+              </Card>
+            </div>
+            <Tabs defaultValue="week">
+              <div className="flex items-center">
+                <TabsList className="bg-[#27272A] border-black rounded-md">
+                  <TabsTrigger
+                    value="week"
+                    className="bg-[#27272A] data-[state=active]:bg-[#09090B] data-[state=active]:text-white"
+                  >
+                    Week
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="month"
+                    className="data-[state=active]:bg-[#09090B] data-[state=active]:text-white"
+                  >
+                    Month
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="year"
+                    className="data-[state=active]:bg-[#09090B] data-[state=active]:text-white"
+                  >
+                    Year
+                  </TabsTrigger>
+                </TabsList>
+                <div className="ml-auto flex items-center gap-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        className="h-8 gap-1 bg-[#088536] text-white"
+                        style={{
+                          backgroundColor: "#088536",
+                          color: "white",
+                        }}
+                      >
+                        <ListFilter className="h-3.5 w-3.5" />
+                        <span className="sr-only sm:not-sr-only">Filter</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuCheckboxItem checked>
+                        Fulfilled
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Declined
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        Refunded
+                      </DropdownMenuCheckboxItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+              <TabsContent value="week">
+                <Card
+                  x-chunk="dashboard-05-chunk-3"
+                  className="bg-black border-black rounded-md"
+                >
+                  <CardHeader className="px-7">
+                    <CardTitle className="text-white ">Leaderboard</CardTitle>
+                    <CardDescription>
+                      List of our most active planters.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Customer</TableHead>
+                          <TableHead className="hidden sm:table-cell">
+                            Type
+                          </TableHead>
+                          <TableHead className="hidden sm:table-cell">
+                            Status
+                          </TableHead>
+                          <TableHead className="hidden md:table-cell">
+                            Date
+                          </TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow className="bg-accent">
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Olivia Smith</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              olivia@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Refund
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="outline">
+                              Declined
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-24
+                          </TableCell>
+                          <TableCell className="text-right">$150.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Noah Williams</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              noah@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Subscription
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-25
+                          </TableCell>
+                          <TableCell className="text-right">$350.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Emma Brown</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              emma@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-26
+                          </TableCell>
+                          <TableCell className="text-right">$450.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Olivia Smith</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              olivia@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Refund
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="outline">
+                              Declined
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-24
+                          </TableCell>
+                          <TableCell className="text-right">$150.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Emma Brown</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              emma@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-26
+                          </TableCell>
+                          <TableCell className="text-right">$450.00</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
+          <div>
+            <Card
+              className="overflow-hidden bg-black border-black rounded-md"
+              x-chunk="dashboard-05-chunk-4"
+            >
+              <CardHeader className="flex flex-row items-start bg-muted/50">
+                <div className="grid gap-0.5">
+                  <CardTitle className="group flex items-center gap-2 text-lg text-white">
+                    Recent Updates
+                  </CardTitle>
+                  <CardDescription>Date: November 23, 2023</CardDescription>
+                </div>
+                <div className="ml-auto flex items-center gap-1">
+                  <Button size="sm" variant="outline" className="h-8 gap-1">
+                    <Truck className="h-3.5 w-3.5" />
+                    <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
+                      Track Order
+                    </span>
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button size="icon" variant="outline" className="h-8 w-8">
+                        <MoreVertical className="h-3.5 w-3.5" />
+                        <span className="sr-only">More</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem>Export</DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>Trash</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6 text-sm">
+                <div className="grid gap-3">
+                  <div className="font-semibold">Order Details</div>
+                  <ul className="grid gap-3">
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">
+                        Glimmer Lamps x <span>2</span>
+                      </span>
+                      <span>$250.00</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">
+                        Aqua Filters x <span>1</span>
+                      </span>
+                      <span>$49.00</span>
+                    </li>
+                  </ul>
+                  <Separator className="my-2" />
+                  <ul className="grid gap-3">
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span>$299.00</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Shipping</span>
+                      <span>$5.00</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Tax</span>
+                      <span>$25.00</span>
+                    </li>
+                    <li className="flex items-center justify-between font-semibold">
+                      <span className="text-muted-foreground">Total</span>
+                      <span>$329.00</span>
+                    </li>
+                  </ul>
+                </div>
+                <Separator className="my-4" />
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-3">
+                    <div className="font-semibold">Shipping Information</div>
+                    <address className="grid gap-0.5 not-italic text-muted-foreground">
+                      <span>Liam Johnson</span>
+                      <span>1234 Main St.</span>
+                      <span>Anytown, CA 12345</span>
+                    </address>
+                  </div>
+                  <div className="grid auto-rows-max gap-3">
+                    <div className="font-semibold">Billing Information</div>
+                    <div className="text-muted-foreground">
+                      Same as shipping address
+                    </div>
                   </div>
                 </div>
-              ))}
+                <Separator className="my-4" />
+                <div className="grid gap-3">
+                  <div className="font-semibold">Customer Information</div>
+                  <dl className="grid gap-3">
+                    <div className="flex items-center justify-between">
+                      <dt className="text-muted-foreground">Customer</dt>
+                      <dd>Liam Johnson</dd>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <dt className="text-muted-foreground">Email</dt>
+                      <dd>
+                        <a href="mailto:">liam@acme.com</a>
+                      </dd>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <dt className="text-muted-foreground">Phone</dt>
+                      <dd>
+                        <a href="tel:">+1 234 567 890</a>
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+                <Separator className="my-4" />
+                <div className="grid gap-3">
+                  <div className="font-semibold">Payment Information</div>
+                  <dl className="grid gap-3">
+                    <div className="flex items-center justify-between">
+                      <dt className="flex items-center gap-1 text-muted-foreground">
+                        <CreditCard className="h-4 w-4" />
+                        Visa
+                      </dt>
+                      <dd>**** **** **** 4532</dd>
+                    </div>
+                  </dl>
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+                <div className="text-xs text-muted-foreground">
+                  Updated <time dateTime="2023-11-23">November 23, 2023</time>
+                </div>
+                <Pagination className="ml-auto mr-0 w-auto">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <Button size="icon" variant="outline" className="h-6 w-6">
+                        <ChevronLeft className="h-3.5 w-3.5" />
+                        <span className="sr-only">Previous Order</span>
+                      </Button>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <Button size="icon" variant="outline" className="h-6 w-6">
+                        <ChevronRight className="h-3.5 w-3.5" />
+                        <span className="sr-only">Next Order</span>
+                      </Button>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </CardFooter>
+            </Card>
           </div>
-          <Leaderboardwidget />
-        </div>
+        </main>
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

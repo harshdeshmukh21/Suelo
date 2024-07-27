@@ -1,64 +1,59 @@
-import { Button } from "@/components/ui/button";
-import logo from "./image.png";
-import { useNavigate } from "react-router-dom";
-import logoutImage from "../assets/Logout.png";
-import userpfp from "../assets/user-pfp.png";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import {
+  Home,
+  LineChart,
+  Package,
+  Package2,
+  ShoppingCart,
+  User,
+  Calendar,
+  Pen,
+  Map,
+} from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const iconStyle = { color: "white" };
 
-  // const handleLogout = () => {
-  //   logout();
-  // };
+  const navItems = [
+    { icon: Home, label: "Dashboard", path: "/dashboard" },
+    { icon: Calendar, label: "Events", path: "/events" },
+    { icon: Pen, label: "Updates", path: "/updates" },
+    { icon: Map, label: "Map", path: "/yieldatlas" },
+    { icon: User, label: "Profile", path: "/profile" },
+  ];
 
   return (
-    <div className="h-screen bg-[#171717] flex p-5 items-center flex-col justify-content-around">
-      <div className="flex items-center flex-row">
-        <img src={logo} className="h-7 w-7" />
-        <h1 className="ml-2 text-xl text-white font-Montserrat">Suelo</h1>
-      </div>
-      <div className="flex flex-col items-start">
-        <Button
-          className="m-1 mt-10 text-white"
-          onClick={() => navigate("/dashboard")}
-          variant="ghost"
-        >
-          Dashboard
-        </Button>
-        <Button
-          className="m-1 font-white text-white focus:text-white active:text-white"
-          variant="ghost"
-          onClick={() => navigate("/events")}
-        >
-          Activities
-        </Button>
-        <Button
-          className="m-1 text-white focus:text-white active:text-white"
-          variant="ghost"
-          onClick={() => navigate("/updates")}
-        >
-          Updates
-        </Button>
-        <Button
-          className="m-1 text-white focus:text-white active:text-white"
-          variant="ghost"
-          onClick={() => navigate("/yieldatlas")}
-        >
-          Map
-        </Button>
-      </div>
-
-      {/* <a href="http://">
-        <div className="h-7 w-7 mt-4" onClick={() => navigate("/auth")}>
-          <img src={userpfp} alt="Logout" />
-        </div>
-      </a> */}
-
-      <div className="h-9 w-9 mt-[350px]">
-        <img src={logoutImage} alt="logout" onClick={() => navigate("/")} />
-      </div>
-    </div>
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col bg-background sm:flex bg-black">
+      <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+        {navItems.map((item) => (
+          <Tooltip key={item.path}>
+            <TooltipTrigger asChild>
+              <Link
+                to={item.path}
+                className={`flex h-9 w-9 items-center justify-center rounded-full text-white transition-colors hover:text-foreground md:h-8 md:w-8
+                  ${
+                    location.pathname === item.path
+                      ? "bg-[#088536]"
+                      : "hover:bg-gray-800"
+                  }`}
+              >
+                <item.icon className="h-5 w-5" style={iconStyle} />
+                <span className="sr-only">{item.label}</span>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">{item.label}</TooltipContent>
+          </Tooltip>
+        ))}
+      </nav>
+    </aside>
   );
 };
 
