@@ -3,18 +3,9 @@ import { Link } from "react-router-dom";
 import {
   ChevronLeft,
   ChevronRight,
-  Copy,
   CreditCard,
-  File,
-  Home,
-  LineChart,
   ListFilter,
   MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  ShoppingCart,
   Truck,
   Users2,
 } from "lucide-react";
@@ -38,7 +29,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -46,7 +36,6 @@ import {
 } from "@/components/ui/pagination";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   Table,
   TableBody,
@@ -133,7 +122,7 @@ const Dashboard = () => {
           <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               <Card
-                className="sm:col-span-2 bg-black border-black rounded-md"
+                className="sm:col-span-2 bg-black border-[#27272A] rounded-md"
                 x-chunk="dashboard-05-chunk-0"
               >
                 <CardHeader className="pb-3">
@@ -147,7 +136,7 @@ const Dashboard = () => {
               </Card>
               <Card
                 x-chunk="dashboard-05-chunk-1"
-                className="bg-black border-black rounded-md"
+                className="bg-black border-[#27272A] rounded-md"
               >
                 <CardHeader className="pb-2">
                   <CardDescription className="text-[#A1A1AA]">
@@ -170,7 +159,7 @@ const Dashboard = () => {
               </Card>
               <Card
                 x-chunk="dashboard-05-chunk-2"
-                className="bg-black border-black rounded-md"
+                className="bg-black border-[#27272A] rounded-md"
               >
                 <CardHeader className="pb-2">
                   <CardDescription className="text-[#A1A1AA]">
@@ -247,7 +236,7 @@ const Dashboard = () => {
               <TabsContent value="week">
                 <Card
                   x-chunk="dashboard-05-chunk-3"
-                  className="bg-black border-black rounded-md"
+                  className="bg-black border-[#27272A] rounded-md"
                 >
                   <CardHeader className="px-7">
                     <CardTitle className="text-white ">Leaderboard</CardTitle>
@@ -438,14 +427,211 @@ const Dashboard = () => {
                   </CardContent>
                 </Card>
               </TabsContent>
+              <TabsContent value="month">
+                <Card
+                  x-chunk="dashboard-05-chunk-3"
+                  className="bg-black border-[#27272A] rounded-md"
+                >
+                  <CardHeader className="px-7">
+                    <CardTitle className="text-white ">Leaderboard</CardTitle>
+                    <CardDescription>
+                      List of our most active planters.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Table className="text-white">
+                      <TableHeader>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableHead>Customer</TableHead>
+                          <TableHead className="hidden sm:table-cell">
+                            Type
+                          </TableHead>
+                          <TableHead className="hidden sm:table-cell">
+                            Status
+                          </TableHead>
+                          <TableHead className="hidden md:table-cell">
+                            Date
+                          </TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow
+                          className="bg-accent"
+                          style={{ borderBottom: "1px solid #27272A" }}
+                        >
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Olivia Smith</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              olivia@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Refund
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="outline">
+                              Declined
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-24
+                          </TableCell>
+                          <TableCell className="text-right">$150.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Noah Williams</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              noah@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Subscription
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-25
+                          </TableCell>
+                          <TableCell className="text-right">$350.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Emma Brown</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              emma@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-26
+                          </TableCell>
+                          <TableCell className="text-right">$450.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Olivia Smith</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              olivia@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Refund
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="outline">
+                              Declined
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-24
+                          </TableCell>
+                          <TableCell className="text-right">$150.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Emma Brown</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              emma@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-26
+                          </TableCell>
+                          <TableCell className="text-right">$450.00</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
             </Tabs>
           </div>
           <div>
             <Card
-              className="overflow-hidden bg-black border-black rounded-md"
+              className="overflow-hidden bg-black border-[#27272A] rounded-md"
               x-chunk="dashboard-05-chunk-4"
             >
-              <CardHeader className="flex flex-row items-start bg-muted/50">
+              <CardHeader className="flex flex-row items-start bg-muted/50 bg-[#171717] border-[#171717]">
                 <div className="grid gap-0.5">
                   <CardTitle className="group flex items-center gap-2 text-lg text-white">
                     Recent Updates
@@ -453,15 +639,13 @@ const Dashboard = () => {
                   <CardDescription>Date: November 23, 2023</CardDescription>
                 </div>
                 <div className="ml-auto flex items-center gap-1">
-                  <Button size="sm" variant="outline" className="h-8 gap-1">
-                    <Truck className="h-3.5 w-3.5" />
-                    <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-                      Track Order
-                    </span>
-                  </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button size="icon" variant="outline" className="h-8 w-8">
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-8 w-8 bg-black border-black text-white"
+                      >
                         <MoreVertical className="h-3.5 w-3.5" />
                         <span className="sr-only">More</span>
                       </Button>
