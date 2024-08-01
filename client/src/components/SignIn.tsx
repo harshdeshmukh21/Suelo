@@ -30,12 +30,12 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-full">
-      <Card className="mx-auto max-w-sm">
+    <div className="flex items-center justify-center h-screen w-full bg-[black]">
+      <Card className="mx-auto max-w-sm bg-[#000000] border-[#27272A] text-white">
         <CardHeader>
           <img src={logo} alt="" className="h-20" />
           <CardTitle className="text-xl">Sign In</CardTitle>
-          <CardDescription>
+          <CardDescription className="text-[#A1A1AA]">
             Enter your information to Login to your account
           </CardDescription>
         </CardHeader>
@@ -50,6 +50,7 @@ const Login: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="border-[#27272A]"
               />
             </div>
             <div className="grid gap-2">
@@ -59,13 +60,22 @@ const Login: React.FC = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="border-[#27272A]"
               />
             </div>
-            <Button type="submit" className="w-full" onClick={signInUser}>
+            <Button
+              type="submit"
+              className="w-full bg-[#088536]"
+              style={{
+                backgroundColor: "#088536",
+                color: "white",
+              }}
+              onClick={signInUser}
+            >
               Login
             </Button>
           </div>
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm text-[#A1A1AA]">
             Already have an account?{" "}
             <a
               className="underline cursor-pointer"

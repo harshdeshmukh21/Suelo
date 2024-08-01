@@ -1,12 +1,10 @@
 import Sidebar from "./Side-bar";
-import { Link } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  CreditCard,
   ListFilter,
   MoreVertical,
-  Truck,
   Users2,
 } from "lucide-react";
 
@@ -45,9 +43,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { auth } from "@/Firebase";
+import { auth, db } from "@/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { useState, useEffect } from "react";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  Timestamp,
+} from "firebase/firestore";
 
 const Dashboard = () => {
   interface User {
@@ -55,8 +59,34 @@ const Dashboard = () => {
     email: string | null;
     photoURL: string | null;
   }
+  interface Update {
+    id: string;
+    content: string;
+    authorName: string;
+    authorPicture: string;
+    createdAt: Timestamp;
+    highlighted: boolean;
+  }
 
   const [user, setUser] = useState<User | null>(null);
+  const [updates, setUpdates] = useState<Update[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
+
+  useEffect(() => {
+    const updatesCollectionRef = collection(db, "updates");
+    const q = query(updatesCollectionRef, orderBy("createdAt", "desc"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedUpdates = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Update[];
+      setUpdates(fetchedUpdates);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -82,14 +112,7 @@ const Dashboard = () => {
           <div className="text-m font-medium text-white ml-2">
             {user ? `Hello, ${user.displayName}` : "Hello, Guest"}
           </div>
-          <div className="relative ml-auto flex-1 md:grow-0">
-            {/* <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" /> */}
-            {/* <Input
-              type="search"
-              placeholder="Search..."
-              className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-            /> */}
-          </div>
+          <div className="relative ml-auto flex-1 md:grow-0"></div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -628,8 +651,8 @@ const Dashboard = () => {
           </div>
           <div>
             <Card
-              className="overflow-hidden bg-black border-[#27272A] rounded-md"
-              x-chunk="dashboard-05-chunk-4"
+              className="overflow-hidden bg-black border-[#27272A] rounded-md text-white"
+              // x-chunk="dashboard-05-chunk-4"
             >
               <CardHeader className="flex flex-row items-start bg-muted/50 bg-[#171717] border-[#171717]">
                 <div className="grid gap-0.5">
@@ -659,95 +682,35 @@ const Dashboard = () => {
                   </DropdownMenu>
                 </div>
               </CardHeader>
-              <CardContent className="p-6 text-sm">
-                <div className="grid gap-3">
-                  <div className="font-semibold">Order Details</div>
-                  <ul className="grid gap-3">
-                    <li className="flex items-center justify-between">
-                      <span className="text-muted-foreground">
-                        Glimmer Lamps x <span>2</span>
-                      </span>
-                      <span>$250.00</span>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <span className="text-muted-foreground">
-                        Aqua Filters x <span>1</span>
-                      </span>
-                      <span>$49.00</span>
-                    </li>
-                  </ul>
-                  <Separator className="my-2" />
-                  <ul className="grid gap-3">
-                    <li className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Subtotal</span>
-                      <span>$299.00</span>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Shipping</span>
-                      <span>$5.00</span>
-                    </li>
-                    <li className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Tax</span>
-                      <span>$25.00</span>
-                    </li>
-                    <li className="flex items-center justify-between font-semibold">
-                      <span className="text-muted-foreground">Total</span>
-                      <span>$329.00</span>
-                    </li>
-                  </ul>
-                </div>
-                <Separator className="my-4" />
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-3">
-                    <div className="font-semibold">Shipping Information</div>
-                    <address className="grid gap-0.5 not-italic text-muted-foreground">
-                      <span>Liam Johnson</span>
-                      <span>1234 Main St.</span>
-                      <span>Anytown, CA 12345</span>
-                    </address>
-                  </div>
-                  <div className="grid auto-rows-max gap-3">
-                    <div className="font-semibold">Billing Information</div>
-                    <div className="text-muted-foreground">
-                      Same as shipping address
+              <CardContent className="p-6 text-sm max-h-[400px] overflow-y-auto">
+                {updates
+                  .slice(
+                    currentPage * itemsPerPage,
+                    (currentPage + 1) * itemsPerPage
+                  )
+                  .map((update) => (
+                    <div key={update.id} className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2">
+                        <div className="font-semibold text-[17px]">
+                          {update.authorName}
+                        </div>
+                        <time
+                          className="text-[12px] opacity-65 mt-[4px]"
+                          dateTime={update.createdAt.toDate().toISOString()}
+                        >
+                          {update.createdAt.toDate().toLocaleDateString()}
+                        </time>
+                        <time
+                          className="text-[12px] opacity-65 mt-[4px]"
+                          dateTime={update.createdAt.toDate().toISOString()}
+                        >
+                          {update.createdAt.toDate().toLocaleTimeString()}
+                        </time>
+                      </div>
+                      <div className="font-light">{update.content}</div>
+                      {<Separator className="my-2 bg-[#27272A]" />}
                     </div>
-                  </div>
-                </div>
-                <Separator className="my-4" />
-                <div className="grid gap-3">
-                  <div className="font-semibold">Customer Information</div>
-                  <dl className="grid gap-3">
-                    <div className="flex items-center justify-between">
-                      <dt className="text-muted-foreground">Customer</dt>
-                      <dd>Liam Johnson</dd>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <dt className="text-muted-foreground">Email</dt>
-                      <dd>
-                        <a href="mailto:">liam@acme.com</a>
-                      </dd>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <dt className="text-muted-foreground">Phone</dt>
-                      <dd>
-                        <a href="tel:">+1 234 567 890</a>
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
-                <Separator className="my-4" />
-                <div className="grid gap-3">
-                  <div className="font-semibold">Payment Information</div>
-                  <dl className="grid gap-3">
-                    <div className="flex items-center justify-between">
-                      <dt className="flex items-center gap-1 text-muted-foreground">
-                        <CreditCard className="h-4 w-4" />
-                        Visa
-                      </dt>
-                      <dd>**** **** **** 4532</dd>
-                    </div>
-                  </dl>
-                </div>
+                  ))}
               </CardContent>
               <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
                 <div className="text-xs text-muted-foreground">
@@ -756,15 +719,39 @@ const Dashboard = () => {
                 <Pagination className="ml-auto mr-0 w-auto">
                   <PaginationContent>
                     <PaginationItem>
-                      <Button size="icon" variant="outline" className="h-6 w-6">
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-6 w-6"
+                        onClick={() =>
+                          setCurrentPage((prev) => Math.max(0, prev - 1))
+                        }
+                        disabled={currentPage === 0}
+                      >
                         <ChevronLeft className="h-3.5 w-3.5" />
-                        <span className="sr-only">Previous Order</span>
+                        <span className="sr-only">Previous Updates</span>
                       </Button>
                     </PaginationItem>
                     <PaginationItem>
-                      <Button size="icon" variant="outline" className="h-6 w-6">
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-6 w-6"
+                        onClick={() =>
+                          setCurrentPage((prev) =>
+                            Math.min(
+                              Math.ceil(updates.length / itemsPerPage) - 1,
+                              prev + 1
+                            )
+                          )
+                        }
+                        disabled={
+                          currentPage ===
+                          Math.ceil(updates.length / itemsPerPage) - 1
+                        }
+                      >
                         <ChevronRight className="h-3.5 w-3.5" />
-                        <span className="sr-only">Next Order</span>
+                        <span className="sr-only">Next Updates</span>
                       </Button>
                     </PaginationItem>
                   </PaginationContent>

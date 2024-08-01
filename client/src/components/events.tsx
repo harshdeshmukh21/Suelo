@@ -182,9 +182,9 @@ const Events = () => {
                 className="bg-[#09090B] border-[#09090B] text-white rounded-md"
               >
                 <CardHeader>
-                  <CardTitle className="text-[30px]">Events</CardTitle>
+                  <CardTitle className="text-[30px]">All Events</CardTitle>
                   <CardDescription className="text-[#A1A1AA]">
-                    Manage your products and view their sales performance.
+                    Go through new and upcoming events.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -260,9 +260,9 @@ const Events = () => {
                 className="bg-[#09090B] border-[#09090B] text-white rounded-md"
               >
                 <CardHeader>
-                  <CardTitle className="text-[30px]">Events</CardTitle>
+                  <CardTitle className="text-[30px]">Joined Events</CardTitle>
                   <CardDescription className="text-[#A1A1AA]">
-                    Manage your products and view their sales performance.
+                    Manage the events you've joined.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -344,11 +344,9 @@ const Events = () => {
                 className="bg-[#09090B] border-[#09090B] text-white rounded-md"
               >
                 <CardHeader>
-                  <CardTitle className="text-[30px]">
-                    My Created Events
-                  </CardTitle>
+                  <CardTitle className="text-[30px]">My Events</CardTitle>
                   <CardDescription className="text-[#A1A1AA]">
-                    Manage the events you've created and view their performance.
+                    Manage the events you've created.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

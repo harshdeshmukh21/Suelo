@@ -43,12 +43,12 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-full">
-      <Card className="mx-auto max-w-sm">
+    <div className="flex items-center justify-center h-screen w-full bg-black">
+      <Card className="mx-auto max-w-sm bg-[#000000] border-[#27272A] text-white">
         <CardHeader>
           <img src={logo} alt="" className="h-20" />
           <CardTitle className="text-xl">Sign Up</CardTitle>
-          <CardDescription>
+          <CardDescription className="text-[#A1A1AA]">
             Enter your information to create an account
           </CardDescription>
         </CardHeader>
@@ -64,6 +64,7 @@ const SignUp: React.FC = () => {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  className="border-[#27272A]"
                 />
               </div>
             </div>
@@ -76,6 +77,7 @@ const SignUp: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="border-[#27272A]"
               />
             </div>
             <div className="grid gap-2">
@@ -85,18 +87,27 @@ const SignUp: React.FC = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="border-[#27272A]"
               />
             </div>
             <Button
               type="submit"
-              className="w-full"
+              className="w-full bg-[#088536]"
+              style={{
+                backgroundColor: "#088536",
+                color: "white",
+              }}
               onClick={saveDataToFirebase}
             >
               Create an account
             </Button>
             <Button
               variant="outline"
-              className="w-full"
+              className="w-full bg-black border-[#27272A]"
+              style={{
+                backgroundColor: "#000000",
+                color: "white",
+              }}
               onClick={signInWithGoogle}
             >
               Sign up with{" "}
@@ -107,7 +118,7 @@ const SignUp: React.FC = () => {
               />
             </Button>
           </div>
-          <div className="mt-4 text-center text-sm">
+          <div className="mt-4 text-center text-sm text-[#A1A1AA]">
             Already have an account?{" "}
             <Link className="underline cursor-pointer" to={"/SignIn"}>
               Sign in
