@@ -3,6 +3,13 @@ import mapboxgl, { LngLatLike } from "mapbox-gl";
 import "../components/Map.css"; // Import CSS file for custom styling
 import Sidebar from "../comps/Side-bar";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 // import bg from "../assets/bg.jpeg";
 
 interface ClassResult {
@@ -132,47 +139,60 @@ const Map: React.FC = () => {
   }, []);
 
   return (
-    <div
-      className="whole bg-cover bg-center text-sm bg-[#171717] h-[100vh]"
-      // style={{ backgroundImage: `url(${bg})` }}
-    >
+    <div className="whole bg-cover bg-center text-sm bg-[#171717] h-[100vh]">
       <div className="flex">
-        <div>
-          {" "}
-          <Sidebar />
-        </div>
-        <div className="">
-          <h2 className="pl-[50px] font-bold text-[30px] text-white mt-[-15vh] ml-[10vh]">
-            Yield Atlas
-          </h2>
-          <div
-            ref={mapContainerRef}
-            className=" w-[650px] h-[500px] mt-[5%] bg-[#171717] p-2 rounded-[10px] ml-[15vh]"
-          />
-        </div>
-      </div>
-      <div className="flex-row ml-[60px]  h-[500px] mt-130px text-white mt-[-8vh]">
-        {classResult && (
-          <div className="flex-row w-[300px] font-light bg-black p-4 rounded-md">
-            <h3 className="font-bold">Class Result-</h3>
-            <p className="font-semibold">
-              Survey Number: {classResult.survey_number}
-            </p>
-            <p className="font-semibold text-sm">
-              State/UT: {classResult.state_or_ut}
-            </p>
-            <p className="font-semibold text-sm">Class: {classResult.class}</p>
-            <p className="font-semibold text-sm"> Owner: {classResult.Owner}</p>
-          </div>
-        )}
-        {cropSuggestion && (
-          <div className="mt-[20px] pr-[10px] mr-[100px] bg-black rounded-md text-white">
-            <h3 className="font-semibold text-sm p-4 text-[16px]">
-              Crop Suggestion:
-            </h3>
-            <p className="p-4 mt-[-20px]">{cropSuggestion.cropSuggestion}</p>
-          </div>
-        )}
+        {" "}
+        <Sidebar />
+        <Card
+          x-chunk="dashboard-06-chunk-0"
+          className="bg-[#09090B] border-[#09090B] text-white rounded-md ml-[11vh] w-[92vw] h-[84vh] mt-[-55px]"
+        >
+          <CardHeader>
+            <CardTitle className="text-[30px]">Yield Atlas</CardTitle>
+            <CardDescription className="text-[#A1A1AA]">
+              <p className="mt-2">Analyze crop yield and get suggestions.</p>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col md:flex-row">
+              <div
+                ref={mapContainerRef}
+                className="w-full md:w-[650px] h-[500px] bg-[#171717] p-2 rounded-[10px] mb-4 md:mb-0 md:mr-4"
+              />
+              <div className="flex flex-col">
+                {classResult && (
+                  <div className="w-full md:w-[300px] font-light p-4 rounded-md mb-4">
+                    <h3 className="font-bold text-[25px] mb-[10px]">
+                      Class Result
+                    </h3>
+                    <p className="font-semibold">
+                      Survey Number: {classResult.survey_number}
+                    </p>
+                    <p className="font-semibold text-sm">
+                      State/UT: {classResult.state_or_ut}
+                    </p>
+                    <p className="font-semibold text-sm">
+                      Class: {classResult.class}
+                    </p>
+                    <p className="font-semibold text-sm">
+                      Owner: {classResult.Owner}
+                    </p>
+                  </div>
+                )}
+                {cropSuggestion && (
+                  <div className="w-[600px] rounded-md text-white p-4 overflow-scroll max-h-[350px]">
+                    <h3 className="font-bold text-[25px] mb-[10px]">
+                      Crop Suggestions
+                    </h3>
+                    <p className="text-light">
+                      {cropSuggestion.cropSuggestion}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

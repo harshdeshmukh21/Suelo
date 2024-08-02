@@ -1,12 +1,6 @@
 import Sidebar from "./Side-bar";
-import { useState, useMemo, useEffect } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ListFilter,
-  MoreVertical,
-  Users2,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, ListFilter, Users2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -68,10 +62,16 @@ const Dashboard = () => {
     highlighted: boolean;
   }
 
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const [user, setUser] = useState<User | null>(null);
   const [updates, setUpdates] = useState<Update[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 7;
 
   useEffect(() => {
     const updatesCollectionRef = collection(db, "updates");
@@ -149,7 +149,9 @@ const Dashboard = () => {
                 x-chunk="dashboard-05-chunk-0"
               >
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-white">Daily Quote</CardTitle>
+                  <CardTitle className="text-white text-[30px]">
+                    Daily Quote
+                  </CardTitle>
                   <CardDescription className="max-w-lg leading-relaxed text-[#A1A1AA]">
                     Introducing Our Dynamic Orders Dashboard for Seamless
                     Management and Insightful Analysis.
@@ -259,18 +261,20 @@ const Dashboard = () => {
               <TabsContent value="week">
                 <Card
                   x-chunk="dashboard-05-chunk-3"
-                  className="bg-black border-[#27272A] rounded-md"
+                  className="bg-black border-[#27272A] rounded-md h-[55vh] overflow-scroll text-white"
                 >
                   <CardHeader className="px-7">
-                    <CardTitle className="text-white ">Leaderboard</CardTitle>
+                    <CardTitle className="text-white text-[30px]">
+                      Leaderboard
+                    </CardTitle>
                     <CardDescription>
                       List of our most active planters.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Table>
+                    <Table className="text-white">
                       <TableHeader>
-                        <TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
                           <TableHead>Customer</TableHead>
                           <TableHead className="hidden sm:table-cell">
                             Type
@@ -285,7 +289,10 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        <TableRow className="bg-accent">
+                        <TableRow
+                          className="bg-accent"
+                          style={{ borderBottom: "1px solid #27272A" }}
+                        >
                           <TableCell>
                             <div className="font-medium">Liam Johnson</div>
                             <div className="hidden text-sm text-muted-foreground md:inline">
@@ -305,7 +312,7 @@ const Dashboard = () => {
                           </TableCell>
                           <TableCell className="text-right">$250.00</TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
                           <TableCell>
                             <div className="font-medium">Olivia Smith</div>
                             <div className="hidden text-sm text-muted-foreground md:inline">
@@ -325,7 +332,7 @@ const Dashboard = () => {
                           </TableCell>
                           <TableCell className="text-right">$150.00</TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
                           <TableCell>
                             <div className="font-medium">Noah Williams</div>
                             <div className="hidden text-sm text-muted-foreground md:inline">
@@ -345,7 +352,7 @@ const Dashboard = () => {
                           </TableCell>
                           <TableCell className="text-right">$350.00</TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
                           <TableCell>
                             <div className="font-medium">Emma Brown</div>
                             <div className="hidden text-sm text-muted-foreground md:inline">
@@ -365,7 +372,7 @@ const Dashboard = () => {
                           </TableCell>
                           <TableCell className="text-right">$450.00</TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
                           <TableCell>
                             <div className="font-medium">Liam Johnson</div>
                             <div className="hidden text-sm text-muted-foreground md:inline">
@@ -385,7 +392,7 @@ const Dashboard = () => {
                           </TableCell>
                           <TableCell className="text-right">$250.00</TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
                           <TableCell>
                             <div className="font-medium">Liam Johnson</div>
                             <div className="hidden text-sm text-muted-foreground md:inline">
@@ -405,7 +412,7 @@ const Dashboard = () => {
                           </TableCell>
                           <TableCell className="text-right">$250.00</TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
                           <TableCell>
                             <div className="font-medium">Olivia Smith</div>
                             <div className="hidden text-sm text-muted-foreground md:inline">
@@ -453,10 +460,211 @@ const Dashboard = () => {
               <TabsContent value="month">
                 <Card
                   x-chunk="dashboard-05-chunk-3"
-                  className="bg-black border-[#27272A] rounded-md"
+                  className="bg-black border-[#27272A] rounded-md h-[55vh] overflow-scroll text-white"
                 >
                   <CardHeader className="px-7">
-                    <CardTitle className="text-white ">Leaderboard</CardTitle>
+                    <CardTitle className="text-white text-[30px]">
+                      Leaderboard
+                    </CardTitle>
+                    <CardDescription>
+                      List of our most active planters.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Table className="text-white">
+                      <TableHeader>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableHead>Customer</TableHead>
+                          <TableHead className="hidden sm:table-cell">
+                            Type
+                          </TableHead>
+                          <TableHead className="hidden sm:table-cell">
+                            Status
+                          </TableHead>
+                          <TableHead className="hidden md:table-cell">
+                            Date
+                          </TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow
+                          className="bg-accent"
+                          style={{ borderBottom: "1px solid #27272A" }}
+                        >
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Olivia Smith</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              olivia@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Refund
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="outline">
+                              Declined
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-24
+                          </TableCell>
+                          <TableCell className="text-right">$150.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Noah Williams</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              noah@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Subscription
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-25
+                          </TableCell>
+                          <TableCell className="text-right">$350.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Emma Brown</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              emma@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-26
+                          </TableCell>
+                          <TableCell className="text-right">$450.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Liam Johnson</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              liam@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-23
+                          </TableCell>
+                          <TableCell className="text-right">$250.00</TableCell>
+                        </TableRow>
+                        <TableRow style={{ borderBottom: "1px solid #27272A" }}>
+                          <TableCell>
+                            <div className="font-medium">Olivia Smith</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              olivia@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Refund
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="outline">
+                              Declined
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-24
+                          </TableCell>
+                          <TableCell className="text-right">$150.00</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <div className="font-medium">Emma Brown</div>
+                            <div className="hidden text-sm text-muted-foreground md:inline">
+                              emma@example.com
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            Sale
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell">
+                            <Badge className="text-xs" variant="secondary">
+                              Fulfilled
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            2023-06-26
+                          </TableCell>
+                          <TableCell className="text-right">$450.00</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="year">
+                <Card
+                  x-chunk="dashboard-05-chunk-3"
+                  className="bg-black border-[#27272A] rounded-md h-[55vh] overflow-scroll text-white"
+                >
+                  <CardHeader className="px-7">
+                    <CardTitle className="text-white text-[30px]">
+                      Leaderboard
+                    </CardTitle>
                     <CardDescription>
                       List of our most active planters.
                     </CardDescription>
@@ -650,46 +858,68 @@ const Dashboard = () => {
             </Tabs>
           </div>
           <div>
-            <Card
-              className="overflow-hidden bg-black border-[#27272A] rounded-md text-white"
-              // x-chunk="dashboard-05-chunk-4"
-            >
+            <Card className="overflow-hidden bg-black border-[#27272A] rounded-md text-white h-[88vh]">
               <CardHeader className="flex flex-row items-start bg-muted/50 bg-[#171717] border-[#171717]">
                 <div className="grid gap-0.5">
-                  <CardTitle className="group flex items-center gap-2 text-lg text-white">
+                  <CardTitle className="group flex items-center gap-2 text-lg text-white text-[30px]">
                     Recent Updates
                   </CardTitle>
-                  <CardDescription>Date: November 23, 2023</CardDescription>
+                  <CardDescription>{currentDate}</CardDescription>
                 </div>
                 <div className="ml-auto flex items-center gap-1">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className="h-8 w-8 bg-black border-black text-white"
-                      >
-                        <MoreVertical className="h-3.5 w-3.5" />
-                        <span className="sr-only">More</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Export</DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>Trash</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Pagination className="ml-auto mr-0 w-auto">
+                    <PaginationContent>
+                      <PaginationItem>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className="h-6 w-6 text-black"
+                          onClick={() =>
+                            setCurrentPage((prev) => Math.max(0, prev - 1))
+                          }
+                          disabled={currentPage === 0}
+                        >
+                          <ChevronLeft className="h-3.5 w-3.5" />
+                          <span className="sr-only">Previous Updates</span>
+                        </Button>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className="h-6 w-6 text-black"
+                          onClick={() =>
+                            setCurrentPage((prev) =>
+                              Math.min(
+                                Math.ceil(updates.length / itemsPerPage) - 1,
+                                prev + 1
+                              )
+                            )
+                          }
+                          disabled={
+                            currentPage ===
+                            Math.ceil(updates.length / itemsPerPage) - 1
+                          }
+                        >
+                          <ChevronRight className="h-3.5 w-3.5" />
+                          <span className="sr-only">Next Updates</span>
+                        </Button>
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
                 </div>
               </CardHeader>
-              <CardContent className="p-6 text-sm max-h-[400px] overflow-y-auto">
+              <CardContent className="p-6 text-sm max-h-[400px]">
                 {updates
                   .slice(
                     currentPage * itemsPerPage,
                     (currentPage + 1) * itemsPerPage
                   )
                   .map((update) => (
-                    <div key={update.id} className="flex flex-col gap-2">
+                    <div
+                      key={update.id}
+                      className="flex flex-col gap-2 mt-[-1.2px]"
+                    >
                       <div className="flex items-center gap-2">
                         <div className="font-semibold text-[17px]">
                           {update.authorName}
@@ -712,7 +942,7 @@ const Dashboard = () => {
                     </div>
                   ))}
               </CardContent>
-              <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+              {/* <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
                 <div className="text-xs text-muted-foreground">
                   Updated <time dateTime="2023-11-23">November 23, 2023</time>
                 </div>
@@ -722,7 +952,7 @@ const Dashboard = () => {
                       <Button
                         size="icon"
                         variant="outline"
-                        className="h-6 w-6"
+                        className="h-6 w-6 text-black"
                         onClick={() =>
                           setCurrentPage((prev) => Math.max(0, prev - 1))
                         }
@@ -736,7 +966,7 @@ const Dashboard = () => {
                       <Button
                         size="icon"
                         variant="outline"
-                        className="h-6 w-6"
+                        className="h-6 w-6 text-black"
                         onClick={() =>
                           setCurrentPage((prev) =>
                             Math.min(
@@ -756,7 +986,7 @@ const Dashboard = () => {
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
           </div>
         </main>
