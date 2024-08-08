@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Sidebar from "./Side-bar";
+import Sidebar from "./Sidebar";
 import { auth, db } from "@/Firebase";
 import {
   collection,
@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 
 interface Update {
   id: string;

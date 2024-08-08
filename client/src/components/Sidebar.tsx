@@ -1,16 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  ShoppingCart,
-  User,
-  Calendar,
-  Pen,
-  Map,
-} from "lucide-react";
+import { Home, User, Calendar, Pen, Map } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -26,7 +16,7 @@ const Sidebar = () => {
     { icon: Home, label: "Dashboard", path: "/dashboard" },
     { icon: Calendar, label: "Events", path: "/events" },
     { icon: Pen, label: "Updates", path: "/updates" },
-    { icon: Map, label: "Map", path: "/yieldatlas" },
+    { icon: Map, label: "Map", path: "/map" },
     { icon: User, label: "Profile", path: "/profile" },
   ];
 

@@ -33,7 +33,7 @@
     "@types/firebase": "^3.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "embla-carousel-react": "^8.0.1",
+    "embla-carousel-react": "^8.1.8",
     "firebase": "^10.10.0",
     "lucide-react": "^0.411.0",
     "mapbox-gl": "^3.4.0",

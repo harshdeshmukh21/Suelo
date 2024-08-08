@@ -1,7 +1,6 @@
-import Sidebar from "./Side-bar";
+import Sidebar from "./Sidebar";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ListFilter, Users2 } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,6 +45,7 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   interface User {
@@ -131,13 +131,33 @@ const Dashboard = () => {
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent
+              align="end"
+              className="bg-black text-white border-black"
+            >
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-gray-800" />
+              <Link to="/profile">
+                <DropdownMenuItem
+                  className="text-white bg-[black] border-[black]"
+                  style={{
+                    backgroundColor: "#000000",
+                    color: "white",
+                  }}
+                >
+                  Profile
+                </DropdownMenuItem>
+              </Link>
+              {/* <DropdownMenuSeparator className="bg-black" /> */}
+              <DropdownMenuItem
+                className="text-white bg-[black] border-[black]"
+                style={{
+                  backgroundColor: "#000000",
+                  color: "white",
+                }}
+              >
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
@@ -859,7 +879,7 @@ const Dashboard = () => {
           </div>
           <div>
             <Card className="overflow-hidden bg-black border-[#27272A] rounded-md text-white h-[88vh]">
-              <CardHeader className="flex flex-row items-start bg-muted/50 bg-[#171717] border-[#171717]">
+              <CardHeader className="flex flex-row items-start bg-muted/50 bg-black border-[#171717]">
                 <div className="grid gap-0.5">
                   <CardTitle className="group flex items-center gap-2 text-lg text-white text-[30px]">
                     Recent Updates

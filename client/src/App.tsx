@@ -1,11 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignUp from "./components/SignUp";
 import Login from "./components/SignIn";
-import Dashboard from "./comps/Dashboard";
-import Events from "./components/events";
+import Dashboard from "./components/Dashboard";
+import Events from "./components/Events";
+import Profile from "./components/Profile";
 import "./App.css";
 import "./index.css";
-import Updates from "./comps/Updates";
+import Updates from "./components/Updates";
 import Home from "./Home";
 import Map from "./components/Map";
 import { useEffect } from "react";
@@ -32,9 +33,10 @@ function App() {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/SignIn" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/yieldatlas" element={<Map />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/events" element={<Events />} />
           <Route path="/updates" element={<Updates />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </TooltipProvider>

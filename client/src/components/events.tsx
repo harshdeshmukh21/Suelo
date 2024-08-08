@@ -1,4 +1,4 @@
-import { File, ListFilter, MoreHorizontal, PlusCircle } from "lucide-react";
+import { ListFilter, MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -26,7 +26,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Sidebar from "@/comps/Side-bar";
+import Sidebar from "./Sidebar.tsx";
 import Activity from "@/components/ui/create-act.tsx";
 import { db } from "@/Firebase";
 import {

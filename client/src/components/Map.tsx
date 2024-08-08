@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl, { LngLatLike } from "mapbox-gl";
 import "../components/Map.css"; // Import CSS file for custom styling
-import Sidebar from "../comps/Side-bar";
+import Sidebar from "./Sidebar";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import {
   Card,
