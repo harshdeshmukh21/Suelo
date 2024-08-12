@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-
 interface Update {
   id: string;
   content: string;
@@ -34,7 +33,6 @@ const Updates = () => {
   useEffect(() => {
     const updatesCollectionRef = collection(db, "updates");
     const q = query(updatesCollectionRef, orderBy("createdAt", "desc"));
-
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const fetchedUpdates = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -42,13 +40,11 @@ const Updates = () => {
       })) as Update[];
       setUpdates(fetchedUpdates);
     });
-
     return () => unsubscribe();
   }, []);
 
   const handleSubmit = async () => {
     if (!user || !newUpdate.trim()) return;
-
     try {
       const updatesCollectionRef = collection(db, "updates");
       await addDoc(updatesCollectionRef, {
@@ -58,6 +54,7 @@ const Updates = () => {
         createdAt: Timestamp.now(),
         highlighted: true,
       });
+      setNewUpdate(""); // Clear the input after posting
     } catch (error) {
       console.error("Error adding update: ", error);
       alert("Failed to add update. Please try again.");
@@ -67,44 +64,45 @@ const Updates = () => {
   return (
     <div className="flex flex-row flex-wrap bg-[#171717] h-[100vh]">
       <Sidebar />
-      <div className="flex flex-col pl-20 p-8 overflow-scroll">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto h-[95%]">
-          {updates.map((update) => (
-            <div
-              key={update.id}
-              className={`w-full bg-black text-gray-200 p-4 shadow-lg rounded-lg shadow-olive-500/40 flex flex-col ${
-                Math.random() > 0.5 ? "row-span-1" : "row-span-2"
-              }`}
-            >
-              <div className="flex flex-row font-medium items-center space-x-3 w-full">
-                <img
-                  src={update.authorPicture}
-                  className="h-10"
-                  alt={update.authorName}
-                />
-                <h1 className="text-white">{update.authorName}</h1>
-                <span className="ml-auto text-gray-400 text-sm font-normal">
-                  {update.createdAt.toDate().toLocaleDateString()}{" "}
-                  {update.createdAt.toDate().toLocaleTimeString()}
-                </span>
+      <div className="flex flex-col pl-20 p-8 flex-1 h-full">
+        <div className="flex-1 overflow-y-auto mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-auto">
+            {updates.map((update) => (
+              <div
+                key={update.id}
+                className="w-full bg-black text-gray-200 p-4 shadow-lg rounded-lg shadow-olive-500/40 flex flex-col"
+                style={{ minHeight: "auto", height: "auto" }}
+              >
+                <div className="flex flex-row font-medium items-center space-x-3 w-full">
+                  <img
+                    src={update.authorPicture}
+                    className="h-10"
+                    alt={update.authorName}
+                  />
+                  <h1 className="text-white">{update.authorName}</h1>
+                  <span className="ml-auto text-gray-400 text-sm font-normal">
+                    {update.createdAt.toDate().toLocaleDateString()}{" "}
+                    {update.createdAt.toDate().toLocaleTimeString()}
+                  </span>
+                </div>
+                <div className="flex w-full mt-2">
+                  <h3 className="text-white break-words">{update.content}</h3>
+                </div>
               </div>
-              <div className="flex w-fit mt-2 ">
-                <h3 className="text-white">{update.content}</h3>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        <div className="flex z-80 w-full items-end px-80 p-2 gap-4 ">
+        <div className="flex w-full items-end gap-4">
           <Input
             type="text"
-            className="flex-1 border text-white rounded-md placeholder:text-white mt-4"
+            className="flex-1 border text-white rounded-md placeholder:text-white"
             placeholder="What is happening?"
             value={newUpdate}
             onChange={handleInputChange}
           />
           <Button
             type="submit"
-            className="rounded-none hover:bg-black hover:text-white bg-[#088536] rounded-md  text-white"
+            className="hover:bg-black hover:text-white bg-[#088536] rounded-md text-white"
             onClick={handleSubmit}
           >
             Post

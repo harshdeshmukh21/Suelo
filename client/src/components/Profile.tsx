@@ -172,7 +172,7 @@ const Profile = () => {
           <TabsContent value="badges" className="flex justify-center">
             <Carousel className="w-full max-w-xs mt-12">
               <CarouselContent>
-                {Array.from({ length: 5 }).map((_, index) => (
+                {Array.from({ length: 6 }).map((_, index) => (
                   <CarouselItem key={index}>
                     <div className="p-1">
                       <Card>
