@@ -11,13 +11,6 @@ import {
 } from "@/components/ui/card";
 import { auth, db } from "@/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-  Timestamp,
-} from "firebase/firestore";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Carousel,
@@ -26,6 +19,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import hyrdroponics from "../assets/hydroponics.png";
+import dandelion from "../assets/dandelion.png";
+import spinach from "../assets/spinach.png";
+import sugarcane from "../assets/sugarcane.png";
+import basil from "../assets/basil.png"; // Ensure the extension is correct
+import bonsai from "../assets/bonsai.png";
+import chia from "../assets/chia.png";
 
 import { Separator } from "@/components/ui/separator";
 
@@ -56,16 +56,20 @@ const Profile = () => {
     return () => unsubscribe();
   }, []);
 
+  const badgeImages = [
+    hyrdroponics,
+    dandelion,
+    spinach,
+    sugarcane,
+    basil,
+    bonsai,
+    chia,
+  ];
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40 bg-[#151518]">
       <Sidebar />
-      <Card className="w-[93vw] h-[94vh] ml-[10vh] mt-[3vh] bg-black border-black text-white rounded-md">
-        {/* <CardHeader>
-          <CardTitle className="text-[30px]">Profile</CardTitle>
-          <CardDescription>
-            Deploy your new project in one-click.
-          </CardDescription>
-        </CardHeader> */}
+      <Card className="w-[92.7vw] h-[92.5vh] ml-[11.5vh] mt-[4vh] bg-black border-black text-white rounded-md">
         <CardContent className="flex flex-col justify-center items-center">
           <div className="overflow-hidden rounded-full h-[50px] w-[50px] mt-[20px]">
             {user && user.photoURL ? (
@@ -131,70 +135,52 @@ const Profile = () => {
             <Separator className="bg-[#27272A]" />
             <div className="ml-auto flex items-center gap-2"></div>
           </div>
-          <TabsContent value="events">
-            <Card
-              x-chunk="dashboard-06-chunk-0"
-              className="bg-[black] border-[#09090B] text-white rounded-md"
-            >
-              <CardHeader>
-                <CardTitle className="text-[30px]">All Events</CardTitle>
-                <CardDescription className="text-[#A1A1AA]">
-                  Go through new and upcoming events.
-                </CardDescription>
-              </CardHeader>
-              <CardContent></CardContent>
-              <CardFooter>
-                <div className="text-xs text-muted-foreground">
-                  Showing <strong>1-10</strong> of <strong>32</strong> products
-                </div>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-          <TabsContent value="joined">
-            <Card
-              x-chunk="dashboard-06-chunk-0"
-              className="bg-[black] border-[#09090B] text-white rounded-md"
-            >
-              <CardHeader>
-                <CardTitle className="text-[30px]">Joined Events</CardTitle>
-                <CardDescription className="text-[#A1A1AA]">
-                  Manage the events you've joined.
-                </CardDescription>
-              </CardHeader>
-              <CardContent></CardContent>
-              <CardFooter>
-                <div className="text-xs text-muted-foreground">
-                  Showing <strong>1-10</strong> of <strong>32</strong> products
-                </div>
-              </CardFooter>
-            </Card>
-          </TabsContent>
           <TabsContent value="badges" className="flex justify-center">
-            <Carousel className="w-full max-w-xs mt-12">
+            <Carousel className="w-full max-w-xs mt-12 border-black">
               <CarouselContent>
-                {Array.from({ length: 6 }).map((_, index) => (
+                {badgeImages.map((image, index) => (
                   <CarouselItem key={index}>
                     <div className="p-1">
                       <Card>
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <span className="text-4xl font-semibold">
-                            {index + 1}
-                          </span>
+                        <CardContent
+                          className="flex aspect-square items-center justify-center p-6 bg-black text-white"
+                          style={{
+                            border: "2px solid #000000",
+                            borderRadius: "10px",
+                          }}
+                        >
+                          <img
+                            src={image}
+                            alt={`Badge ${index + 1}`}
+                            className="h-[250px] w-[300px]"
+                          />
                         </CardContent>
                       </Card>
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              <CarouselPrevious
+                className="bg-black"
+                style={{
+                  backgroundColor: "#000000",
+                  color: "white",
+                }}
+              />
+              <CarouselNext
+                className="bg-black"
+                style={{
+                  backgroundColor: "#000000",
+                  color: "white",
+                }}
+              />
             </Carousel>
           </TabsContent>
         </Tabs>
-        {/* </main> */}
         <CardFooter className="flex justify-between"></CardFooter>
       </Card>
     </div>
   );
 };
+
 export default Profile;

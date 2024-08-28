@@ -929,7 +929,7 @@ const Dashboard = () => {
                   </Pagination>
                 </div>
               </CardHeader>
-              <CardContent className="p-6 text-sm max-h-[400px]">
+              <CardContent className="p-6 text-sm max-h-[480px] overflow-scroll">
                 {updates
                   .slice(
                     currentPage * itemsPerPage,

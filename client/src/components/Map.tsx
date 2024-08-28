@@ -145,7 +145,7 @@ const Map: React.FC = () => {
         <Sidebar />
         <Card
           x-chunk="dashboard-06-chunk-0"
-          className="bg-[#09090B] border-[#09090B] text-white rounded-md ml-[11vh] w-[92vw] h-[84vh] mt-[-55px]"
+          className="bg-[#09090B] border-[#09090B] text-white rounded-md ml-[11vh] w-[93vw] h-[90vh] mt-[-20px]"
         >
           <CardHeader>
             <CardTitle className="text-[30px]">Yield Atlas</CardTitle>
